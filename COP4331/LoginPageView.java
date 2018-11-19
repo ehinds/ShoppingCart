@@ -7,12 +7,14 @@ package COP4331;
 
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  *
  * @author Brownie
  */
-public class LoginPageView extends javax.swing.JFrame 
+public class LoginPageView extends javax.swing.JFrame implements Observer
 {
     private LoginPageModel model;
     /**
@@ -22,8 +24,7 @@ public class LoginPageView extends javax.swing.JFrame
     {
         model = loginPageModel;
         initComponents();
-        
-        
+        model.addObserver(this);
     }
     
     String getUsername() 
@@ -60,7 +61,14 @@ public class LoginPageView extends javax.swing.JFrame
         passwordText.addKeyListener(keyListener);
         //passwordText.addActionListener(actionListener);
     }
-
+    
+    @Override
+    public void update(Observable observable, Object arg) 
+    {
+        model = (LoginPageModel)observable;
+        setLoginEnabled(model.getLoginEnable());
+        showError(model.getErrorMessage());
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -168,6 +176,8 @@ public class LoginPageView extends javax.swing.JFrame
     private javax.swing.JButton registerButton;
     private javax.swing.JTextField usernameText;
     // End of variables declaration//GEN-END:variables
+
+    
 
 
 

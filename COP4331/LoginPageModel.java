@@ -5,13 +5,15 @@
  */
 package COP4331;
 
+import java.util.Observable;
+
 /**
  *
  * @author Brownie
  */
-public class LoginPageModel 
+public class LoginPageModel extends Observable
 {
-    private boolean loginButtonEnabled = false;
+    private boolean loginEnabled = false;
     private String errorMessage = "";
     
     public LoginPageModel()
@@ -21,17 +23,21 @@ public class LoginPageModel
     
     public void setLoginButtonEnable(boolean enabled)
     {
-        loginButtonEnabled = enabled;
+        loginEnabled = enabled;
+        setChanged();
+        notifyObservers();
     }
     
-    public boolean getLoginButtonEnable()
+    public boolean getLoginEnable()
     {
-        return loginButtonEnabled;
+        return loginEnabled;
     }
     
     public void setErrorMessage(String message)
     {
         errorMessage = message;
+        setChanged();
+        notifyObservers();
     }
     
     public String getErrorMessage()

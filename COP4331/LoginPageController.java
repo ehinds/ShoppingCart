@@ -54,24 +54,24 @@ public class LoginPageController
                     if(loginSuccess)
                     {
                         model.setErrorMessage("");
-                        view.showError(model.getErrorMessage());
+                        //view.showError(model.getErrorMessage());
                     }
                     else
                     {
                         model.setErrorMessage("Incorrect username or password");
-                        view.showError(model.getErrorMessage());
+                        //view.showError(model.getErrorMessage());
                     }
                 }
                 else
                 {
                     model.setErrorMessage("Username does not exist");
-                    view.showError(model.getErrorMessage());
+                    //view.showError(model.getErrorMessage());
                 }  
             }
             catch (NumberFormatException nfex) 
             {
                 model.setErrorMessage("Login error");
-                view.showError(model.getErrorMessage());
+                //view.showError(model.getErrorMessage());
             }
         }
     }
@@ -105,7 +105,7 @@ public class LoginPageController
                 readyToLogin = (username.length() >= 5 && password.length() >= 5);
                 
                 model.setLoginButtonEnable(readyToLogin);
-                view.setLoginEnabled(model.getLoginButtonEnable());
+                //view.setLoginEnabled(model.getLoginEnable());
             }
             catch (NumberFormatException nfex) 
             {
