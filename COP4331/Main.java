@@ -8,22 +8,32 @@ import javax.swing.JPanel;
  *
  * @author Brownie
  */
+
 public class Main 
 {
+    Database database = new Database();
+
     public static void main(String[] args) 
     {
         System.out.println("Welcome to the shopping cart program!\n");
         
-        LoginPageView loginPageView = new LoginPageView();
-        loginPageView.setVisible(true);
-        
         Database database = new Database();
         database.connect();
-        database.createNewTable();
-
-        database.insertUser();
+        database.createNewUsersTable();
+        database.insertUser(new User());
         database.selectAll();
         
+        LoginPageModel loginPageModel = new LoginPageModel();
+        LoginPageView loginPageView = new LoginPageView(loginPageModel);
+        LoginPageController loginPageController = new LoginPageController(loginPageModel, loginPageView);
+        loginPageView.setVisible(true);
+        
+        
+        
+        
+
+
+        //http://www.fredosaurus.com/notes-java/GUI/structure/40mvc.html
         
         //loginPageView.update();
         //loginPageView.show();

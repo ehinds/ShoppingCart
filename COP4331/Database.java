@@ -13,17 +13,23 @@ import java.sql.ResultSet;
  */
 public class Database 
 {
-    String url = "jdbc:sqlite:C:/sqlite/db/shoppingCart.db";
+    String url = "jdbc:sqlite:shoppingCart.db";
+    //String url = "jdbc:sqlite:C:/sqlite/db/shoppingCart.db";
      /**
      * Connect to a sample database
      */
+    public Database() 
+    {
+        
+    }
+    
     public void connect() 
     {
-        Connection conn = null;
+        Connection connection = null;
         try 
         {
             // create a connection to the database
-            conn = DriverManager.getConnection(url);
+            connection = DriverManager.getConnection(url);
             
             System.out.println("Connection to SQLite has been established.");
             
@@ -34,9 +40,9 @@ public class Database
         {
             try 
             {
-                if (conn != null) 
+                if (connection != null) 
                 {
-                    conn.close();
+                    connection.close();
                 }
             } catch (SQLException ex) 
             {
@@ -45,10 +51,8 @@ public class Database
         }
     }
     
-    public void createNewTable() 
+    public void createNewUsersTable() 
     {
-        // SQL statement for creating a new table
-        
         String sql = "CREATE TABLE IF NOT EXISTS users (\n"
                 + "	username text PRIMARY KEY,\n"
                 + "	password text NOT NULL,\n"
@@ -63,22 +67,19 @@ public class Database
                 + "	products text\n"
                 + ");";
 
-        
-        try (Connection conn = DriverManager.getConnection(url);
-                Statement stmt = conn.createStatement()) 
+        try (Connection connection = DriverManager.getConnection(url);
+                Statement statement = connection.createStatement()) 
         {
-            // create a new table
-            stmt.execute(sql);
-            System.out.println("Made table");
+            statement.execute(sql);
+            //System.out.println("Made table");
         } catch (SQLException e) 
         {
             System.out.println(e.getMessage());
         }
     }
 
-    public void insertUser() 
+    public void insertUser(User user) 
     {
-        User user = new User();
         user.username = "Michael";
         user.password = "Password";
         user.accountType = true;
@@ -93,8 +94,9 @@ public class Database
         String sql = "INSERT INTO users(username, password, accountType, email, phone, address, DOB, creditCard, bankAccount, products) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
  
         System.out.println("Inserting user");
-        try (Connection conn = DriverManager.getConnection(url);
-                PreparedStatement pstmt = conn.prepareStatement(sql)) 
+        try(
+                Connection connection = DriverManager.getConnection(url);
+                PreparedStatement pstmt = connection.prepareStatement(sql)) 
         {
             
             pstmt.setObject(1, "Michael" + Double.toString(Math.random()));
@@ -116,23 +118,71 @@ public class Database
         }
     }
     
+    //  'statement' doesn't allow parameters, use 'prepareStatement'
     public void selectAll()
     {
         String sql = "SELECT * FROM users";
         
-        try (Connection conn = DriverManager.getConnection(url);
-             Statement stmt  = conn.createStatement();
-             ResultSet rs    = stmt.executeQuery(sql))
+        try (Connection connection = DriverManager.getConnection(url);
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(sql))
         {
-            
-            // loop through the result set
-            while (rs.next()) 
+            while (resultSet.next()) 
             {
-                System.out.println(rs.getObject("username"));
+                System.out.println(resultSet.getObject("username"));
             }
         } catch (SQLException e) 
         {
             System.out.println(e.getMessage());
+        }
+    }
+    
+    public boolean userExists(String username)
+    {
+        System.out.println("Checking if " + username + " exists");
+        String sql = "SELECT username FROM users WHERE username = ?";
+        
+        try (Connection connection = DriverManager.getConnection(url);
+             PreparedStatement preparedStatement  = connection.prepareStatement(sql))
+        {
+             preparedStatement.setString(1, username);
+             ResultSet resultSet  = preparedStatement.executeQuery();
+
+            while (resultSet.next()) 
+            {
+                System.out.println(resultSet.getObject("username"));
+                return true;
+            }
+            return false;
+        } catch (SQLException e) 
+        {
+            System.out.println("UserExists() error.");
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
+    
+    public boolean verifyPassword(String username, String password)
+    {
+        String sql = "SELECT username FROM users WHERE username = ? and password = ?";
+        
+        try (Connection connection = DriverManager.getConnection(url);
+             PreparedStatement preparedStatement  = connection.prepareStatement(sql))
+        {
+             preparedStatement.setString(1, username);
+             preparedStatement.setString(2, password);
+             ResultSet resultSet  = preparedStatement.executeQuery();
+
+            while (resultSet.next()) 
+            {
+                System.out.println(resultSet.getObject("username"));
+                return true;
+            }
+            return false;
+        } catch (SQLException e) 
+        {
+            System.out.println(e.getMessage());
+            return false;
         }
     }
 }

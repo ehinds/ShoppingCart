@@ -173,9 +173,9 @@ public class RegistrationPageView extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField5ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        LoginPageView loginPageView = new LoginPageView();
-        loginPageView.setVisible(true);
-        this.dispose();
+        //LoginPageView loginPageView = new LoginPageView();
+        //loginPageView.setVisible(true);
+        //this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
 
