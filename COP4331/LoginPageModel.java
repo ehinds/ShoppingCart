@@ -18,14 +18,13 @@ public class LoginPageModel extends Observable
     
     public LoginPageModel()
     {
-
+        update();
     }
     
     public void setLoginButtonEnable(boolean enabled)
     {
         loginEnabled = enabled;
-        setChanged();
-        notifyObservers();
+        update();
     }
     
     public boolean getLoginEnable()
@@ -36,8 +35,7 @@ public class LoginPageModel extends Observable
     public void setErrorMessage(String message)
     {
         errorMessage = message;
-        setChanged();
-        notifyObservers();
+        update();
     }
     
     public String getErrorMessage()
@@ -45,5 +43,9 @@ public class LoginPageModel extends Observable
         return errorMessage;
     }
     
-    
+    public void update()
+    {
+        setChanged();
+        notifyObservers();
+    }
 }

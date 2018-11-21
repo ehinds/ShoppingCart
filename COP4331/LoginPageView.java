@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package COP4331;
 
 import java.awt.event.ActionListener;
@@ -14,17 +9,45 @@ import java.util.Observer;
  *
  * @author Brownie
  */
-public class LoginPageView extends javax.swing.JFrame implements Observer
+public class LoginPageView extends GenericView implements Observer
 {
     private LoginPageModel model;
     /**
      * Creates new form LoginPageView
+     * @param loginPageModel
      */
     public LoginPageView(LoginPageModel loginPageModel) 
     {
-        model = loginPageModel;
-        initComponents();
+        model = loginPageModel;   
+        //  Warning below
         model.addObserver(this);
+    }
+    
+    public static void main(String[] args) 
+    {
+        System.out.println("Welcome to the shopping cart program!\n");
+        
+        //Database database = new Database();
+        //database.connect();
+        //database.createNewUsersTable();
+        //database.insertUser(new User());
+        //database.selectAll();
+        
+        //LoginPageModel loginPageModel = new LoginPageModel();
+        //LoginPageView loginPageView = new LoginPageView(loginPageModel);
+       //LoginPageController loginPageController = new LoginPageController(loginPageModel, loginPageView);
+       //loginPageView.setVisible(true);
+        
+        LoginPageModel model = new LoginPageModel();
+        LoginPageView view = new LoginPageView(model);
+        view.setLayout();
+        view.setVisible(true);
+        LoginPageController controller = new LoginPageController(model, view);
+
+        //http://www.fredosaurus.com/notes-java/GUI/structure/40mvc.html
+        
+        //view.update();
+        //loginPageView.show();
     }
     
     String getUsername() 
@@ -45,7 +68,6 @@ public class LoginPageView extends javax.swing.JFrame implements Observer
     void setLoginEnabled(boolean enabled) 
     {
         loginButton.setEnabled(enabled);
-
     }
     
     void addLoginListener(ActionListener actionListener) 
@@ -62,12 +84,13 @@ public class LoginPageView extends javax.swing.JFrame implements Observer
         //passwordText.addActionListener(actionListener);
     }
     
-    @Override
-    public void update(Observable observable, Object arg) 
+    void addRegisterListener(ActionListener actionListener) 
     {
-        model = (LoginPageModel)observable;
-        setLoginEnabled(model.getLoginEnable());
-        showError(model.getErrorMessage());
+        System.out.println("Register listener added\n");
+        //usernameText.textProperty().addActionListener(actionListener);
+        //usernameText.addKeyListener(keyListener);
+        registerButton.addActionListener(actionListener);
+        //passwordText.addActionListener(actionListener);
     }
 
     /**
@@ -103,11 +126,6 @@ public class LoginPageView extends javax.swing.JFrame implements Observer
         loginButton.setEnabled(false);
 
         registerButton.setText("Register");
-        registerButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                registerButtonActionPerformed(evt);
-            }
-        });
 
         errorLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         errorLabel.setForeground(new java.awt.Color(255, 0, 0));
@@ -160,12 +178,6 @@ public class LoginPageView extends javax.swing.JFrame implements Observer
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
-        RegistrationPageView registrationPageView = new RegistrationPageView();
-        registrationPageView.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_registerButtonActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel errorLabel;
     private javax.swing.JLabel jLabel1;
@@ -177,7 +189,26 @@ public class LoginPageView extends javax.swing.JFrame implements Observer
     private javax.swing.JTextField usernameText;
     // End of variables declaration//GEN-END:variables
 
-    
+    @Override
+    public void setLayout() 
+    {
+        initComponents();
+    }
+
+    @Override
+    public void enableScrollbar() 
+    {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void update(Observable observable, Object arg) 
+    {
+        model = (LoginPageModel)observable;
+        setLoginEnabled(model.getLoginEnable());
+        showError(model.getErrorMessage());
+        this.displayFrame();
+    }
 
 
 
