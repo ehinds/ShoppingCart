@@ -22,34 +22,7 @@ public class LoginPageView extends GenericView implements Observer
         //  Warning below
         model.addObserver(this);
     }
-    
-    public static void main(String[] args) 
-    {
-        System.out.println("Welcome to the shopping cart program!\n");
-        
-        //Database database = new Database();
-        //database.connect();
-        //database.createNewUsersTable();
-        //database.insertUser(new User());
-        //database.selectAll();
-        
-        //LoginPageModel loginPageModel = new LoginPageModel();
-        //LoginPageView loginPageView = new LoginPageView(loginPageModel);
-       //LoginPageController loginPageController = new LoginPageController(loginPageModel, loginPageView);
-       //loginPageView.setVisible(true);
-        
-        LoginPageModel model = new LoginPageModel();
-        LoginPageView view = new LoginPageView(model);
-        view.setLayout();
-        view.setVisible(true);
-        LoginPageController controller = new LoginPageController(model, view);
 
-        //http://www.fredosaurus.com/notes-java/GUI/structure/40mvc.html
-        
-        //view.update();
-        //loginPageView.show();
-    }
-    
     String getUsername() 
     {
         return usernameText.getText();
@@ -78,19 +51,35 @@ public class LoginPageView extends GenericView implements Observer
     void addUsernamePasswordListener(KeyListener keyListener) 
     {
         System.out.println("Setting up username and password text action listener\n");
-        //usernameText.textProperty().addActionListener(actionListener);
         usernameText.addKeyListener(keyListener);
         passwordText.addKeyListener(keyListener);
-        //passwordText.addActionListener(actionListener);
     }
     
     void addRegisterListener(ActionListener actionListener) 
     {
         System.out.println("Register listener added\n");
-        //usernameText.textProperty().addActionListener(actionListener);
-        //usernameText.addKeyListener(keyListener);
         registerButton.addActionListener(actionListener);
-        //passwordText.addActionListener(actionListener);
+    }
+    
+    @Override
+    public void setLayout() 
+    {
+        initComponents();
+    }
+
+    @Override
+    public void enableScrollbar() 
+    {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void update(Observable observable, Object arg) 
+    {
+        model = (LoginPageModel)observable;
+        setLoginEnabled(model.getLoginEnable());
+        showError(model.getErrorMessage());
+        this.displayFrame();
     }
 
     /**
@@ -189,29 +178,22 @@ public class LoginPageView extends GenericView implements Observer
     private javax.swing.JTextField usernameText;
     // End of variables declaration//GEN-END:variables
 
-    @Override
-    public void setLayout() 
+    public static void main(String[] args) 
     {
-        initComponents();
+        System.out.println("Welcome to the shopping cart program!\n");
+        
+        //Database database = new Database();
+        //database.connect();
+        //database.createNewUsersTable();
+        //database.insertUser(new User());
+        //database.selectAll();
+        
+        LoginPageModel model = new LoginPageModel();
+        LoginPageView view = new LoginPageView(model);
+        view.setLayout();
+        view.setVisible(true);
+        LoginPageController controller = new LoginPageController(model, view);
+
+        //http://www.fredosaurus.com/notes-java/GUI/structure/40mvc.html
     }
-
-    @Override
-    public void enableScrollbar() 
-    {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void update(Observable observable, Object arg) 
-    {
-        model = (LoginPageModel)observable;
-        setLoginEnabled(model.getLoginEnable());
-        showError(model.getErrorMessage());
-        this.displayFrame();
-    }
-
-
-
-
-
 }

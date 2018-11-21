@@ -19,18 +19,7 @@ public abstract class GenericView extends javax.swing.JFrame
     
     public GenericView()
     {
-        //LoginPageModel loginPageModel = new LoginPageModel();
-        //LoginPage loginPage = new LoginPage(loginPageModel);
-        //LoginPageController loginPageController = new LoginPageController(this, loginPageModel, loginPage);
-        //this.setVisible(true);
-       
-        //frame = new JFrame();
-        //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //Container contentPane = frame.getContentPane();
-        //contentPane.add(loginPage, BorderLayout.CENTER);
-        
-        //frame.pack();
-        //frame.setVisible(true);
+
     }
     
     public void displayFrame()

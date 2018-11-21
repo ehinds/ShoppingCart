@@ -18,11 +18,8 @@ public class LoginPageController implements ActionListener, KeyListener
 {
     private final Database database = new Database();
     private final LoginPageModel model;
-    //private final LoginPage view;
     private final LoginPageView view;
-    //GenericView genericView;
-    //public String test = "test";
-    //args here
+
     public LoginPageController(LoginPageModel loginPageModel, LoginPageView loginPageView)
     {
         System.out.println("Control init");
