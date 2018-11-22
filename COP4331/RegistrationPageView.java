@@ -9,12 +9,14 @@ package COP4331;
  *
  * @author Brownie
  */
-public class RegistrationPageView extends javax.swing.JFrame {
+public class RegistrationPageView extends javax.swing.JFrame 
+{
 
     /**
      * Creates new form RegistrationPageView
      */
-    public RegistrationPageView() {
+    public RegistrationPageView() 
+    {
         initComponents();
     }
 

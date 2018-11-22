@@ -19,28 +19,29 @@ public class LoginPageView extends GenericView implements Observer
     public LoginPageView(LoginPageModel loginPageModel) 
     {
         model = loginPageModel;   
-        //  Warning below
-        model.addObserver(this);
-    }
-
-    String getUsername() 
-    {
-        return usernameText.getText();
     }
     
-    String getPassword() 
+    User getLoginInformation()
     {
-        return new String(passwordText.getPassword());
+        User user = new User();
+        user.username = usernameText.getText();
+        user.password = new String(passwordText.getPassword());
+        return user;
     }
     
-    void showError(String error) 
+    void showErrorMessage(String error) 
     {
         errorLabel.setText(error);
     }
     
-    void setLoginEnabled(boolean enabled) 
+    void enableLoginButton(boolean enabled) 
     {
         loginButton.setEnabled(enabled);
+    }
+    
+    void addObservers()
+    {
+        model.addObserver(this);
     }
     
     void addLoginListener(ActionListener actionListener) 
@@ -77,8 +78,8 @@ public class LoginPageView extends GenericView implements Observer
     public void update(Observable observable, Object arg) 
     {
         model = (LoginPageModel)observable;
-        setLoginEnabled(model.getLoginEnable());
-        showError(model.getErrorMessage());
+        enableLoginButton(model.getLoginEnable());
+        showErrorMessage(model.getErrorMessage());
         this.displayFrame();
     }
 
@@ -189,10 +190,14 @@ public class LoginPageView extends GenericView implements Observer
         //database.selectAll();
         
         LoginPageModel model = new LoginPageModel();
+        
         LoginPageView view = new LoginPageView(model);
         view.setLayout();
+        view.addObservers();
         view.setVisible(true);
+        
         LoginPageController controller = new LoginPageController(model, view);
+        controller.addListeners();
 
         //http://www.fredosaurus.com/notes-java/GUI/structure/40mvc.html
     }

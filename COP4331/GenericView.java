@@ -15,8 +15,6 @@ import javax.swing.JFrame;
  */
 public abstract class GenericView extends javax.swing.JFrame
 {
-    //public JFrame frame;
-    
     public GenericView()
     {
 
@@ -30,17 +28,4 @@ public abstract class GenericView extends javax.swing.JFrame
     
     abstract public void setLayout();
     abstract public void enableScrollbar();
-    
-    public void switchView(Object lp, Container container)
-    {
-        System.out.println(lp);
-        lp = null;
-        //frame.getContentPane().removeAll();
-        //frame.setContentPane(container);
-        //frame.pack();
-        //frame.setVisible(true);
-        System.out.println(lp);
-    }
-    
-
 }

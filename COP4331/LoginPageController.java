@@ -22,11 +22,12 @@ public class LoginPageController implements ActionListener, KeyListener
 
     public LoginPageController(LoginPageModel loginPageModel, LoginPageView loginPageView)
     {
-        System.out.println("Control init");
-        //genericView = gv;
         model = loginPageModel;
         view = loginPageView;
-        
+    }
+    
+    void addListeners()
+    {
         view.addLoginListener(this);
         view.addRegisterListener(this);
         view.addUsernamePasswordListener(this); 
@@ -36,11 +37,11 @@ public class LoginPageController implements ActionListener, KeyListener
     public void actionPerformed(ActionEvent event) 
     {
         String command = event.getActionCommand();
-        if(command == "Login")
+        if("Login".equals(command))
         {
             LoginListener();
         }
-        else if(command == "Register")
+        else if("Register".equals(command))
         {
             System.out.println("Control opening register");
             RegisterListener();
@@ -49,42 +50,32 @@ public class LoginPageController implements ActionListener, KeyListener
     
     public void LoginListener()
     {
-        String username = "";
-        String password = "";
-        boolean userExists = false;
-        boolean loginSuccess = false;
-
         try 
         {
-            username = view.getUsername();
+            User user = view.getLoginInformation();
 
-            userExists = database.userExists(username);
+            boolean userExists = database.userExists(user.username);
 
             if(userExists)
             {
-                password = view.getPassword();
-                loginSuccess = database.verifyPassword(username, password);
+                boolean loginSuccess = database.verifyPassword(user.username, user.password);
                 if(loginSuccess)
                 {
                     model.setErrorMessage("");
-                    //view.showError(model.getErrorMessage());
                 }
                 else
                 {
                     model.setErrorMessage("Incorrect username or password");
-                    //view.showError(model.getErrorMessage());
                 }
             }
             else
             {
                 model.setErrorMessage("Username does not exist");
-                //view.showError(model.getErrorMessage());
             }  
         }
         catch (NumberFormatException nfex) 
         {
             model.setErrorMessage("Login error");
-            //view.showError(model.getErrorMessage());
         }
     }
     
@@ -92,40 +83,24 @@ public class LoginPageController implements ActionListener, KeyListener
     {
         view.removeAll();
         view.dispose();
-        
-        //LoginPageModel model = new LoginPageModel();
-        //LoginPageView view = new LoginPageView(model);
+
         RegistrationPageView registrationPageView = new RegistrationPageView();
         registrationPageView.setVisible(true);
-        //v.switchView(this, new RegistrationPage());
-        System.out.println("Testing to see if I'm still alive.");
-        //gg.loginPage = view;
-        //gg.frame.setContentPane(view);
-        //gg.frame.pack();
-        //gg.frame.setVisible(true);
     }
     
     public void UsernamePasswordListener()
     {
-        //System.out.println(event.KeyEvent);
-
-        //System.out.println("User/Pass Listener\n");
-        String username = "";
-        String password = "";
-        boolean readyToLogin = false;
+        User user = view.getLoginInformation();
 
         try 
         {
-            username = view.getUsername();
-            password = view.getPassword();
-            readyToLogin = (username.length() >= 5 && password.length() >= 5);
+            boolean readyToLogin = (user.username.length() >= 5 && user.password.length() >= 5);
 
             model.setLoginButtonEnable(readyToLogin);
-            //view.setLoginEnabled(model.getLoginEnable());
         }
         catch (NumberFormatException nfex) 
         {
-            //m_view.showError("Bad input: '" + username + "'");
+            
         }
     }
 

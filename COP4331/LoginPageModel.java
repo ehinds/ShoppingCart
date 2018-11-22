@@ -18,7 +18,7 @@ public class LoginPageModel extends Observable
     
     public LoginPageModel()
     {
-        update();
+        //update();
     }
     
     public void setLoginButtonEnable(boolean enabled)
@@ -42,6 +42,7 @@ public class LoginPageModel extends Observable
     {
         return errorMessage;
     }
+    
     
     public void update()
     {
