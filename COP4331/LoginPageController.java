@@ -26,11 +26,22 @@ public class LoginPageController implements ActionListener, KeyListener
         view = loginPageView;
     }
     
+    public void displayLoginPage()
+    {
+        view.setLayout();
+        view.addObservers();
+        view.update(model, null);
+        
+        addListeners();
+                
+        view.setVisible(true);
+    }
+    
     void addListeners()
     {
         view.addLoginListener(this);
         view.addRegisterListener(this);
-        view.addUsernamePasswordListener(this); 
+        view.addUserListener(this); 
     }
 
     @Override
@@ -39,20 +50,20 @@ public class LoginPageController implements ActionListener, KeyListener
         String command = event.getActionCommand();
         if("Login".equals(command))
         {
-            LoginListener();
+            login();
         }
         else if("Register".equals(command))
         {
             System.out.println("Control opening register");
-            RegisterListener();
+            displayRegistrationPage();
         }
     }
     
-    public void LoginListener()
+    public void login()
     {
         try 
         {
-            User user = view.getLoginInformation();
+            User user = view.getUser();
 
             boolean userExists = database.userExists(user.username);
 
@@ -78,19 +89,21 @@ public class LoginPageController implements ActionListener, KeyListener
             model.setErrorMessage("Login error");
         }
     }
-    
-    public void RegisterListener()
+
+    public void displayRegistrationPage()
     {
         view.removeAll();
         view.dispose();
-
-        RegistrationPageView registrationPageView = new RegistrationPageView();
-        registrationPageView.setVisible(true);
+        
+        RegistrationPageModel registrationPageModel = new RegistrationPageModel();
+        RegistrationPageView registrationPageView = new RegistrationPageView(registrationPageModel);
+        RegistrationPageController registrationPageController = new RegistrationPageController(registrationPageModel, registrationPageView);
+        registrationPageController.displayRegistrationPage();
     }
     
-    public void UsernamePasswordListener()
+    public void userListener()
     {
-        User user = view.getLoginInformation();
+        User user = view.getUser();
 
         try 
         {
@@ -120,6 +133,6 @@ public class LoginPageController implements ActionListener, KeyListener
     public void keyReleased(KeyEvent e) 
     {
         System.out.println(e);
-        UsernamePasswordListener();
+        userListener();
     } 
 }

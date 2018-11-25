@@ -18,10 +18,10 @@ public class LoginPageView extends GenericView implements Observer
      */
     public LoginPageView(LoginPageModel loginPageModel) 
     {
-        model = loginPageModel;   
+        model = loginPageModel;
     }
-    
-    User getLoginInformation()
+
+    User getUser()
     {
         User user = new User();
         user.username = usernameText.getText();
@@ -49,7 +49,7 @@ public class LoginPageView extends GenericView implements Observer
         loginButton.addActionListener(actionListener);
     }
     
-    void addUsernamePasswordListener(KeyListener keyListener) 
+    void addUserListener(KeyListener keyListener) 
     {
         System.out.println("Setting up username and password text action listener\n");
         usernameText.addKeyListener(keyListener);
@@ -113,7 +113,6 @@ public class LoginPageView extends GenericView implements Observer
         jLabel3.setText("Password");
 
         loginButton.setText("Login");
-        loginButton.setEnabled(false);
 
         registerButton.setText("Register");
 
@@ -192,12 +191,9 @@ public class LoginPageView extends GenericView implements Observer
         LoginPageModel model = new LoginPageModel();
         
         LoginPageView view = new LoginPageView(model);
-        view.setLayout();
-        view.addObservers();
-        view.setVisible(true);
         
         LoginPageController controller = new LoginPageController(model, view);
-        controller.addListeners();
+        controller.displayLoginPage();
 
         //http://www.fredosaurus.com/notes-java/GUI/structure/40mvc.html
     }

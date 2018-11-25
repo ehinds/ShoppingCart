@@ -78,8 +78,9 @@ public class Database
         }
     }
 
-    public void insertUser(User user) 
+    public boolean insertUser(User user) 
     {
+        /*
         user.username = "Michael";
         user.password = "Password";
         user.accountType = true;
@@ -90,6 +91,7 @@ public class Database
         user.creditCard = "1233345";
         user.bankAccount = "34534545";
         user.products = null;
+        */
         
         String sql = "INSERT INTO users(username, password, accountType, email, phone, address, DOB, creditCard, bankAccount, products) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
  
@@ -99,7 +101,7 @@ public class Database
                 PreparedStatement pstmt = connection.prepareStatement(sql)) 
         {
             
-            pstmt.setObject(1, "Michael" + Double.toString(Math.random()));
+            pstmt.setObject(1, user.username);
             pstmt.setObject(2, user.password);
             pstmt.setObject(3, user.accountType);
             pstmt.setObject(4, user.email);
@@ -112,9 +114,11 @@ public class Database
             
             //pstmt.setDouble(2, capacity);
             pstmt.executeUpdate();
+            return true;
         } catch (SQLException e) 
         {
             System.out.println(e.getMessage());
+            return false;
         }
     }
     

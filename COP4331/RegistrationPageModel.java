@@ -6,25 +6,25 @@ import java.util.Observable;
  *
  * @author Brownie
  */
-public class LoginPageModel extends Observable
+public class RegistrationPageModel extends Observable
 {
-    private boolean loginEnabled = false;
+    private boolean registerEnabled = false;
     private String errorMessage = "";
     
-    public LoginPageModel()
+    public RegistrationPageModel()
     {
         //update();
     }
     
-    public void setLoginButtonEnable(boolean enabled)
+    public void setRegisterButtonEnable(boolean enabled)
     {
-        loginEnabled = enabled;
+        registerEnabled = enabled;
         update();
     }
     
-    public boolean getLoginEnable()
+    public boolean getRegisterEnable()
     {
-        return loginEnabled;
+        return registerEnabled;
     }
     
     public void setErrorMessage(String message)
