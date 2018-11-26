@@ -37,11 +37,22 @@ public class LoginPageController implements ActionListener, KeyListener
         view.setVisible(true);
     }
     
+    public void displaySellerHomepage(User user)
+    {
+        view.removeAll();
+        view.dispose();
+        
+        SellerHomepageModel sellerHomepageModel = new SellerHomepageModel(user);
+        SellerHomepageView sellerHomepageView = new SellerHomepageView(sellerHomepageModel);
+        SellerHomepageController sellerHomepageController = new SellerHomepageController(sellerHomepageModel, sellerHomepageView);
+        sellerHomepageController.displaySellerHomepage();
+    }
+    
     void addListeners()
     {
-        view.addLoginListener(this);
-        view.addRegisterListener(this);
-        view.addUserListener(this); 
+        view.addLoginButtonListener(this);
+        view.addRegisterButtonListener(this);
+        view.addUserInputListener(this); 
     }
 
     @Override
@@ -72,7 +83,15 @@ public class LoginPageController implements ActionListener, KeyListener
                 boolean loginSuccess = database.verifyPassword(user.username, user.password);
                 if(loginSuccess)
                 {
-                    model.setErrorMessage("");
+                    user = database.getUserData(user);
+                    if(user.accountType)
+                    {
+                        displaySellerHomepage(user);
+                    }
+                    else
+                    {
+                        //displayCustomerHomepage();
+                    }
                 }
                 else
                 {

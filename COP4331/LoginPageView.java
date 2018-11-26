@@ -44,19 +44,19 @@ public class LoginPageView extends GenericView implements Observer
         model.addObserver(this);
     }
     
-    void addLoginListener(ActionListener actionListener) 
+    void addLoginButtonListener(ActionListener actionListener) 
     {
         loginButton.addActionListener(actionListener);
     }
     
-    void addUserListener(KeyListener keyListener) 
+    void addUserInputListener(KeyListener keyListener) 
     {
         System.out.println("Setting up username and password text action listener\n");
         usernameText.addKeyListener(keyListener);
         passwordText.addKeyListener(keyListener);
     }
     
-    void addRegisterListener(ActionListener actionListener) 
+    void addRegisterButtonListener(ActionListener actionListener) 
     {
         System.out.println("Register listener added\n");
         registerButton.addActionListener(actionListener);
@@ -102,6 +102,7 @@ public class LoginPageView extends GenericView implements Observer
         errorLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Login Page");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setText("Login Page");
@@ -118,6 +119,7 @@ public class LoginPageView extends GenericView implements Observer
 
         errorLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         errorLabel.setForeground(new java.awt.Color(255, 0, 0));
+        errorLabel.setText("[Error Message]");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -182,9 +184,10 @@ public class LoginPageView extends GenericView implements Observer
     {
         System.out.println("Welcome to the shopping cart program!\n");
         
-        //Database database = new Database();
+        Database database = new Database();
         //database.connect();
-        //database.createNewUsersTable();
+        database.createNewUsersTable();
+        database.createNewProductsTable();
         //database.insertUser(new User());
         //database.selectAll();
         

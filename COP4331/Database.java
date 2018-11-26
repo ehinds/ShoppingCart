@@ -1,11 +1,14 @@
 package COP4331;
 //package net.sqlitetutorial;
+import java.awt.List;
+import java.sql.Array;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.LinkedList;
 
 /**
  *
@@ -23,7 +26,7 @@ public class Database
         
     }
     
-    public void connect() 
+    public Connection connect() 
     {
         Connection connection = null;
         try 
@@ -36,19 +39,8 @@ public class Database
         } catch (SQLException e) 
         {
             System.out.println(e.getMessage());
-        } finally 
-        {
-            try 
-            {
-                if (connection != null) 
-                {
-                    connection.close();
-                }
-            } catch (SQLException ex) 
-            {
-                System.out.println(ex.getMessage());
-            }
         }
+        return connection;
     }
     
     public void createNewUsersTable() 
@@ -64,7 +56,32 @@ public class Database
                 + "	DOB text,\n"
                 + "	creditCard text,\n"
                 + "	bankAccount,\n"
-                + "	products text\n"
+                + "	products blob\n"
+                + ");";
+
+        try (Connection connection = DriverManager.getConnection(url);
+                Statement statement = connection.createStatement()) 
+        {
+            statement.execute(sql);
+            //System.out.println("Made table");
+        } catch (SQLException e) 
+        {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void createNewProductsTable() 
+    {
+        String sql = "CREATE TABLE IF NOT EXISTS products (\n"
+                + "	title text PRIMARY KEY,\n"
+                + "	summary text,\n"
+                
+                + "	description text,\n"
+                + "	price number,\n"
+                + "	cost text,\n"
+                + "	quantity number,\n"
+                + "	image blob\n"
+
                 + ");";
 
         try (Connection connection = DriverManager.getConnection(url);
@@ -80,25 +97,13 @@ public class Database
 
     public boolean insertUser(User user) 
     {
-        /*
-        user.username = "Michael";
-        user.password = "Password";
-        user.accountType = true;
-        user.email = "Something@email.com";
-        user.phone = "12345";
-        user.address = "myAddress";
-        user.DOB = "56/45/34";
-        user.creditCard = "1233345";
-        user.bankAccount = "34534545";
-        user.products = null;
-        */
-        
         String sql = "INSERT INTO users(username, password, accountType, email, phone, address, DOB, creditCard, bankAccount, products) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
  
         System.out.println("Inserting user");
         try(
                 Connection connection = DriverManager.getConnection(url);
-                PreparedStatement pstmt = connection.prepareStatement(sql)) 
+                PreparedStatement pstmt = connection.prepareStatement(sql)
+            ) 
         {
             
             pstmt.setObject(1, user.username);
@@ -122,8 +127,39 @@ public class Database
         }
     }
     
+    public boolean addProduct(Product product)
+    {
+        {
+            String sql = "INSERT INTO products(title, summary, description, price, cost, quantity, image) VALUES(?, ?, ?, ?, ?, ?, ?)";
+
+            System.out.println("Inserting product");
+            try(
+                    Connection connection = DriverManager.getConnection(url);
+                    PreparedStatement pstmt = connection.prepareStatement(sql)
+                ) 
+            {
+
+                pstmt.setObject(1, product.title);
+                pstmt.setObject(2, product.summary);
+                pstmt.setObject(3, product.description);
+                pstmt.setObject(4, product.price);
+                pstmt.setObject(5, product.invoiceCost);
+                pstmt.setObject(6, product.quantity);
+                pstmt.setObject(7, product.image);
+
+                //pstmt.setDouble(2, capacity);
+                pstmt.executeUpdate();
+                return true;
+            } catch (SQLException e) 
+            {
+                System.out.println(e.getMessage());
+                return false;
+            }
+        }
+    }
+    
     //  'statement' doesn't allow parameters, use 'prepareStatement'
-    public void selectAll()
+    public void selectAllUsers()
     {
         String sql = "SELECT * FROM users";
         
@@ -134,8 +170,79 @@ public class Database
             while (resultSet.next()) 
             {
                 System.out.println(resultSet.getObject("username"));
+                System.out.println(resultSet.getObject("products"));
             }
         } catch (SQLException e) 
+        {
+            System.out.println(e.getMessage());
+        }
+    }
+    
+    public User getUserData(User user)
+    {
+        System.out.println("Getting all data for " + user.username);
+        String sql = "SELECT * FROM users WHERE username = ?";
+        
+        try (Connection connection = DriverManager.getConnection(url);
+             PreparedStatement preparedStatement  = connection.prepareStatement(sql))
+        {
+             preparedStatement.setString(1, user.username);
+             ResultSet resultSet  = preparedStatement.executeQuery();
+
+            while (resultSet.next()) 
+            {
+                System.out.println(resultSet.getObject("username"));
+                user.username = (String) resultSet.getObject("username");
+                user.password = (String) resultSet.getObject("password");
+                
+                if((int)resultSet.getObject("accountType") == 1)
+                {
+                    user.accountType = true;
+                }
+                else
+                {
+                    user.accountType = false;
+                }
+                //user.accountType = (boolean) resultSet.getObject("accountType");
+                
+                user.email = (String) resultSet.getObject("email");
+                user.phone = (String) resultSet.getObject("phone");
+                user.address = (String) resultSet.getObject("address");
+                user.DOB = (String) resultSet.getObject("DOB");
+                
+                user.creditCard = (String) resultSet.getObject("creditCard");
+                user.bankAccount = (String) resultSet.getObject("bankAccount");
+                
+                //TODO Fix reading this back
+                //user.products = (LinkedList) resultSet.getObject("products");
+                
+                return user;
+            }
+            return user;
+        } catch (SQLException e) 
+        {
+            System.out.println("UserExists() error.");
+            System.out.println(e.getMessage());
+            return user;
+        }
+    }
+    
+    public void updateUserProducts(User user)
+    {
+        String sql = "UPDATE users SET products = ? WHERE username = ?";
+ 
+        try
+        (
+            Connection conn = this.connect();
+            PreparedStatement pstmt = conn.prepareStatement(sql)
+        )
+        {
+            pstmt.setString(1, user.products.toString());
+            pstmt.setString(2, user.username);
+            // update 
+            pstmt.executeUpdate();
+        } 
+        catch (SQLException e) 
         {
             System.out.println(e.getMessage());
         }

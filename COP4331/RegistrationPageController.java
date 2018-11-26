@@ -50,9 +50,9 @@ public class RegistrationPageController implements ActionListener, KeyListener
     
     void addListeners()
     {
-        view.addLoginListener(this);
-        view.addRegisterListener(this);
-        view.addUserListener(this); 
+        view.addBackButtonListener(this);
+        view.addRegisterButtonListener(this);
+        view.addUserInputListener(this); 
         
     }
     
@@ -71,7 +71,15 @@ public class RegistrationPageController implements ActionListener, KeyListener
             
             if(database.insertUser(user))
             {
-                model.setErrorMessage("Success");
+                user = database.getUserData(user);
+                if(user.accountType)
+                {
+                    displaySellerHomepage(user);
+                }
+                else
+                {
+                    //displayCustomerHomepage();
+                }
             }
             else
             {
@@ -93,6 +101,17 @@ public class RegistrationPageController implements ActionListener, KeyListener
         LoginPageView loginPageView = new LoginPageView(loginPageModel);
         LoginPageController loginPageController = new LoginPageController(loginPageModel, loginPageView);
         loginPageController.displayLoginPage();
+    }
+   
+    public void displaySellerHomepage(User user)
+    {
+        view.removeAll();
+        view.dispose();
+        
+        SellerHomepageModel sellerHomepageModel = new SellerHomepageModel(user);
+        SellerHomepageView sellerHomepageView = new SellerHomepageView(sellerHomepageModel);
+        SellerHomepageController sellerHomepageController = new SellerHomepageController(sellerHomepageModel, sellerHomepageView);
+        sellerHomepageController.displaySellerHomepage();
     }
     
     @Override

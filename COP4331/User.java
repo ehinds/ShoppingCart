@@ -1,6 +1,8 @@
 package COP4331;
 
 import java.awt.List;
+import java.util.ArrayList;
+import java.util.LinkedList;
 
 /**
  *
@@ -20,10 +22,18 @@ public class User
     String creditCard;
     String bankAccount;
     
-    List products;
+    public LinkedList products = new LinkedList();
     
     public User() 
     {
         
+    }
+    
+    public void addProduct(String title)
+    {
+         System.out.println("User: Adding title");
+         System.out.println(title);
+        products.add(title);
+         System.out.println("User: Title done");
     }
 }

@@ -32,6 +32,9 @@ public class RegistrationPageView extends GenericView implements Observer
         user.address = addressText.getText();
         user.phone = phoneText.getText();
         user.DOB = DOBText.getText();
+        
+        user.accountType = sellerRadio.isEnabled();
+        
         return user;
     }
 
@@ -50,19 +53,19 @@ public class RegistrationPageView extends GenericView implements Observer
         model.addObserver(this);
     }
     
-    void addRegisterListener(ActionListener actionListener) 
+    void addRegisterButtonListener(ActionListener actionListener) 
     {
         System.out.println("Register listener added\n");
         registerButton.addActionListener(actionListener);
     }
     
-    void addLoginListener(ActionListener actionListener) 
+    void addBackButtonListener(ActionListener actionListener) 
     {
         System.out.println("Login listener added\n");
-        loginButton.addActionListener(actionListener);
+        backButton.addActionListener(actionListener);
     }
     
-    void addUserListener(KeyListener keyListener) 
+    void addUserInputListener(KeyListener keyListener) 
     {
         System.out.println("Setting up username and password text action listener\n");
         usernameText.addKeyListener(keyListener);
@@ -94,17 +97,18 @@ public class RegistrationPageView extends GenericView implements Observer
         jLabel8 = new javax.swing.JLabel();
         usernameText = new javax.swing.JTextField();
         emailText = new javax.swing.JTextField();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jRadioButton3 = new javax.swing.JRadioButton();
+        buyerRadio = new javax.swing.JRadioButton();
+        sellerRadio = new javax.swing.JRadioButton();
         addressText = new javax.swing.JTextField();
-        phoneText = new javax.swing.JTextField();
-        DOBText = new javax.swing.JTextField();
-        loginButton = new javax.swing.JButton();
+        backButton = new javax.swing.JButton();
         registerButton = new javax.swing.JButton();
         errorLabel = new javax.swing.JLabel();
         passwordText = new javax.swing.JPasswordField();
+        phoneText = new javax.swing.JFormattedTextField();
+        DOBText = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Registration Page");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setText("Registration Page");
@@ -123,22 +127,34 @@ public class RegistrationPageView extends GenericView implements Observer
 
         jLabel8.setText("Date of birth");
 
-        buttonGroup1.add(jRadioButton2);
-        jRadioButton2.setSelected(true);
-        jRadioButton2.setText("Buyer");
+        buttonGroup1.add(buyerRadio);
+        buyerRadio.setSelected(true);
+        buyerRadio.setText("Buyer");
 
-        buttonGroup1.add(jRadioButton3);
-        jRadioButton3.setText("Seller");
+        buttonGroup1.add(sellerRadio);
+        sellerRadio.setText("Seller");
 
-        phoneText.setToolTipText("");
-
-        loginButton.setText("Back");
-        loginButton.setActionCommand("Login");
-        loginButton.setName(""); // NOI18N
+        backButton.setText("Back");
+        backButton.setActionCommand("Login");
+        backButton.setName(""); // NOI18N
 
         registerButton.setText("Register");
 
+        errorLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         errorLabel.setForeground(new java.awt.Color(255, 0, 0));
+        errorLabel.setText("[Error Message]");
+
+        try {
+            phoneText.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(###) ###-####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        try {
+            DOBText.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/##**")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -148,11 +164,13 @@ public class RegistrationPageView extends GenericView implements Observer
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(loginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(registerButton, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(DOBText, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(phoneText, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(passwordText, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(errorLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(usernameText, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
@@ -161,19 +179,17 @@ public class RegistrationPageView extends GenericView implements Observer
                             .addComponent(emailText, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
                             .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(jRadioButton2)
+                                .addComponent(buyerRadio)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jRadioButton3))
+                                .addComponent(sellerRadio))
                             .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(addressText, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
-                            .addComponent(phoneText, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(DOBText, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addGap(61, 61, 61)
-                                .addComponent(jLabel1)))
+                                .addComponent(jLabel1))
+                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -194,8 +210,8 @@ public class RegistrationPageView extends GenericView implements Observer
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioButton2)
-                    .addComponent(jRadioButton3))
+                    .addComponent(buyerRadio)
+                    .addComponent(sellerRadio))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -217,7 +233,7 @@ public class RegistrationPageView extends GenericView implements Observer
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(registerButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(loginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -227,9 +243,11 @@ public class RegistrationPageView extends GenericView implements Observer
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField DOBText;
+    private javax.swing.JFormattedTextField DOBText;
     private javax.swing.JTextField addressText;
+    private javax.swing.JButton backButton;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JRadioButton buyerRadio;
     private javax.swing.JTextField emailText;
     private javax.swing.JLabel errorLabel;
     private javax.swing.JLabel jLabel1;
@@ -240,12 +258,10 @@ public class RegistrationPageView extends GenericView implements Observer
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
-    private javax.swing.JButton loginButton;
     private javax.swing.JPasswordField passwordText;
-    private javax.swing.JTextField phoneText;
+    private javax.swing.JFormattedTextField phoneText;
     private javax.swing.JButton registerButton;
+    private javax.swing.JRadioButton sellerRadio;
     private javax.swing.JTextField usernameText;
     // End of variables declaration//GEN-END:variables
 
