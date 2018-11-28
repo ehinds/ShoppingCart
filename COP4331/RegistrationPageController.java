@@ -61,7 +61,8 @@ public class RegistrationPageController implements ActionListener, KeyListener
         try 
         {
             User user = view.getUser();
-
+            System.out.println("Generated new user: " + user.products);
+            
             boolean userExists = database.userExists(user.username);
             if(userExists)
             {
@@ -71,7 +72,9 @@ public class RegistrationPageController implements ActionListener, KeyListener
             
             if(database.insertUser(user))
             {
+                System.out.println("Inserted user");
                 user = database.getUserData(user);
+                System.out.println("Getting user: " + user.products);
                 if(user.accountType)
                 {
                     displaySellerHomepage(user);

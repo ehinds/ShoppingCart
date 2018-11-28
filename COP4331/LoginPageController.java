@@ -153,5 +153,10 @@ public class LoginPageController implements ActionListener, KeyListener
     {
         System.out.println(e);
         userListener();
+        if (e.getKeyCode()==KeyEvent.VK_ENTER)
+        {
+            login();
+        }
+        
     } 
 }

@@ -22,7 +22,7 @@ public class User
     String creditCard;
     String bankAccount;
     
-    public LinkedList products = new LinkedList();
+    LinkedList<String> products = new LinkedList<>();
     
     public User() 
     {
@@ -31,9 +31,12 @@ public class User
     
     public void addProduct(String title)
     {
+        //  TODO: Prevent doubles
+        System.out.println("User products: " + products);
          System.out.println("User: Adding title");
          System.out.println(title);
-        products.add(title);
+         products.add(title);
          System.out.println("User: Title done");
+         System.out.println("User products: " + products);
     }
 }
