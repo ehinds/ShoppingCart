@@ -1,7 +1,15 @@
 package COP4331;
 //package net.sqlitetutorial;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.List;
 import java.sql.Array;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -10,15 +18,18 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 
 /**
  *
  * @author Brownie
  */
-public class Database 
+public class Database implements java.io.Serializable 
 {
     String url = "jdbc:sqlite:shoppingCart.db";
-    //String url = "jdbc:sqlite:C:/sqlite/db/shoppingCart.db";
+
      /**
      * Connect to a sample database
      */
@@ -79,7 +90,7 @@ public class Database
                 
                 + "	description text,\n"
                 + "	price integer,\n"
-                + "	cost text,\n"
+                + "	cost integer,\n"
                 + "	quantity integer,\n"
                 + "	image blob\n"
 
@@ -96,8 +107,10 @@ public class Database
         }
     }
 
-    public boolean insertUser(User user) 
+    public boolean insertUser(User user)
     {
+        //ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        //bos.
         String sql = "INSERT INTO users(username, password, accountType, email, phone, address, DOB, creditCard, bankAccount, products) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         
         System.out.println("Inserting user");
@@ -106,7 +119,6 @@ public class Database
                 PreparedStatement pstmt = connection.prepareStatement(sql)
             ) 
         {
-            
             pstmt.setObject(1, user.username);
             pstmt.setObject(2, user.password);
             pstmt.setObject(3, user.accountType);
@@ -117,18 +129,20 @@ public class Database
             pstmt.setObject(8, user.creditCard);
             pstmt.setObject(9, user.bankAccount);
 
-            pstmt.setObject(10, user.products);
+
+            pstmt.setBytes(10, objectToByteArray(user.products));
+
             
-            //pstmt.setDouble(2, capacity);
             pstmt.executeUpdate();
             return true;
-        } catch (SQLException e) 
+        } 
+        catch (SQLException e) 
         {
             System.out.println(e.getMessage());
             return false;
         }
     }
-    
+
     public boolean addProduct(Product product)
     {
         {
@@ -140,15 +154,14 @@ public class Database
                     PreparedStatement pstmt = connection.prepareStatement(sql)
                 ) 
             {
-
                 pstmt.setObject(1, product.title);
                 pstmt.setObject(2, product.summary);
                 pstmt.setObject(3, product.description);
                 pstmt.setObject(4, product.price);
                 pstmt.setObject(5, product.invoiceCost);
                 pstmt.setObject(6, product.quantity);
-                pstmt.setObject(7, product.image);
-
+                //pstmt.setObject(7, product.image);
+                pstmt.setBytes(7, objectToByteArray(product.image));
                 //pstmt.setDouble(2, capacity);
                 pstmt.executeUpdate();
                 return true;
@@ -205,7 +218,6 @@ public class Database
                 {
                     user.accountType = false;
                 }
-                //user.accountType = (boolean) resultSet.getObject("accountType");
                 
                 user.email = (String) resultSet.getObject("email");
                 user.phone = (String) resultSet.getObject("phone");
@@ -214,42 +226,9 @@ public class Database
                 
                 user.creditCard = (String) resultSet.getObject("creditCard");
                 user.bankAccount = (String) resultSet.getObject("bankAccount");
-                
-                //TODO Fix reading this back
-                System.out.println(resultSet.getObject("products"));
 
-                String newString = ((String)(resultSet.getObject("products"))).replace("[", "").replace("]", "").replace(" ", "");
-                String[] output = {};
-                if(!newString.equalsIgnoreCase(""))
-                {
-                    output = newString.split(",");
-                }
-                else
-                {
+                user.products = (LinkedList<String>)byteArrayToObject(resultSet.getBinaryStream("products"));
 
-                }
-                //String[] output = ((String)resultSet.getObject("products")).replace("[", "").replace("]", "").replace(" ", "").split(",");
-                //LinkedList<String> temp = new LinkedList<> (Arrays.asList(output));
-                System.out.println(user.products);
-                //System.out.println((new LinkedList<> (Arrays.asList(output))).size());
-                int size = output.length;
-                System.out.println("Size:" + size);
-                System.out.println("Products Size:" + user.products.size());
-                user.products = new LinkedList<>();
-
-                //output.
-                for(int i = 0; i < size; i++)
-                {
-                    System.out.println("Adding: " + output[i]);
-                    user.products.add(output[i]);
-                }
-                System.out.println(user.products);
-                System.out.println("Products Size:" + user.products.size());
-                //user.products = (LinkedList) (Arrays.asList(output));
-                
-                //des = resultSet.getObject("products");
-                //user.products = (LinkedList) output;
-                
                 return user;
             }
             return user;
@@ -261,7 +240,77 @@ public class Database
         }
     }
     
-    public void updateUserProducts(User user)
+    public Object byteArrayToObject(InputStream inputStream)
+    {
+        Object object = null;
+        try(ObjectInputStream ois = new ObjectInputStream(inputStream))
+        {
+            object = ois.readObject();
+        }
+        catch(IOException e)
+        {
+            System.out.println(e.getMessage());
+        } 
+        catch (ClassNotFoundException ex) 
+        {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex.getMessage());
+        }
+        return object;
+    }
+    
+    public Product getProduct(String productTitle)
+    {
+        String sql = "SELECT * FROM products WHERE title = ?";
+        Product product = new Product();
+        
+        try (Connection connection = DriverManager.getConnection(url);
+             PreparedStatement preparedStatement  = connection.prepareStatement(sql))
+        {
+             preparedStatement.setString(1, productTitle);
+             ResultSet resultSet  = preparedStatement.executeQuery();
+
+            while (resultSet.next()) 
+            {
+                product.title = (String)resultSet.getObject("title");
+                product.summary = (String)resultSet.getObject("summary");
+                product.description = (String)resultSet.getObject("description");
+                product.price = (int)resultSet.getObject("price");
+                product.quantity = (int)resultSet.getObject("quantity");
+                product.invoiceCost = (int)resultSet.getObject("cost");
+                //product.image = (ImageIcon)resultSet.getObject("image");
+                
+                product.image = (ImageIcon)byteArrayToObject(resultSet.getBinaryStream("image"));
+
+                return product;
+            }
+            return product;
+        } catch (SQLException e) 
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Database error while attempting to retreive product.");
+            return product;
+        }
+    }
+    
+    public byte[] objectToByteArray(Object object)
+    {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        try (ObjectOutputStream oos = new ObjectOutputStream(baos)) 
+        {
+            oos.writeObject(object);
+            oos.flush();
+        }
+        catch(IOException e)
+        {
+            System.out.println(e.getMessage());
+            return baos.toByteArray();
+        }
+            
+        return baos.toByteArray();
+    }
+    
+    public void updateUserProductLink(User user)
     {
         String sql = "UPDATE users SET products = ? WHERE username = ?";
  
@@ -271,7 +320,9 @@ public class Database
             PreparedStatement pstmt = conn.prepareStatement(sql)
         )
         {
-            pstmt.setObject(1, user.products);
+
+            pstmt.setBytes(1, objectToByteArray(user.products));
+
             pstmt.setString(2, user.username);
             // update 
             pstmt.executeUpdate();

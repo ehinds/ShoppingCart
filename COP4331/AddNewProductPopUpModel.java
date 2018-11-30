@@ -11,19 +11,30 @@ import javax.swing.JLabel;
  */
 public class AddNewProductPopUpModel extends Observable
 {
-    public User user = new User();
+    private User user = new User();
     public Product product = new Product();
     //public BufferedImage image = null;
     public ImageIcon imageIcon = null;
     
     private String errorMessage = "";
     
+    public User getUser()
+    {
+        return user;
+    }
+    
+    public void setUser(User updatedUser)
+    {
+        user = updatedUser;
+        update();
+    }
+    
     public AddNewProductPopUpModel(User loadUser)
     {
         user = loadUser;
     }
     
-    public void addProduct(String title)
+    public void linkUserProduct(String title)
     {
         user.addProduct(title);
     }
@@ -38,6 +49,7 @@ public class AddNewProductPopUpModel extends Observable
     {
         System.out.println("Setting model image");
         imageIcon = icon;
+        
         update();
     }
     

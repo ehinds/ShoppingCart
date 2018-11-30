@@ -23,11 +23,13 @@ public class AddNewProductPopUpController implements ActionListener
     private final Database database = new Database();
     final JFileChooser fc = new JFileChooser();
     
+    private final SellerHomepageController parent;
     private final AddNewProductPopUpModel model;
     private final AddNewProductPopUpView view;
 
-    public AddNewProductPopUpController(AddNewProductPopUpModel addNewProductPopUpModel, AddNewProductPopUpView addNewProductPopUpView)
+    public AddNewProductPopUpController(SellerHomepageController parentWindow, AddNewProductPopUpModel addNewProductPopUpModel, AddNewProductPopUpView addNewProductPopUpView)
     {
+        parent = parentWindow;
         model = addNewProductPopUpModel;
         view = addNewProductPopUpView;
     }
@@ -96,22 +98,22 @@ public class AddNewProductPopUpController implements ActionListener
                 
             case "Add Product":
                 Product product = view.getProduct();
-                model.addProduct(product.title);
                 
                 if(database.addProduct(product))
                 {
-                    database.updateUserProducts(model.user);
+                    model.linkUserProduct(product.title);
+
+                    database.updateUserProductLink(model.getUser());
+
                     System.out.println("Added product to database");
 
-                    //Experimental
-                    
-                    System.out.println("BEFORE");
-                    System.out.println(model.user.products.toString());
-                    model.user = database.getUserData(model.user);
-                    System.out.println("AFTER");
-                    System.out.println(model.user.products.toString());
-                    
-                    //add to user products
+
+                    model.setUser(database.getUserData(model.getUser()));
+
+                    parent.popupClosed(model.getUser());
+
+                    view.removeAll();
+                    view.dispose();
                     
                 }
                 else

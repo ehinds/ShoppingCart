@@ -31,12 +31,18 @@ public class User
     
     public void addProduct(String title)
     {
-        //  TODO: Prevent doubles
+        //  TODO: Prevent
         System.out.println("User products: " + products);
          System.out.println("User: Adding title");
          System.out.println(title);
          products.add(title);
          System.out.println("User: Title done");
          System.out.println("User products: " + products);
+    }
+    
+    public String serializeProducts()
+    {
+         //System.out.println(resultSet.getObject(user.products.toString()));
+        return "";
     }
 }

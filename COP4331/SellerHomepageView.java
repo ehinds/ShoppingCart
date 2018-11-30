@@ -1,9 +1,16 @@
 package COP4331;
 
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
+import java.util.LinkedList;
 import java.util.Observable;
 import java.util.Observer;
+import javax.swing.BorderFactory;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 /**
  *
@@ -15,29 +22,13 @@ public class SellerHomepageView extends GenericView implements Observer
 
     /**
      * Creates new form RegistrationPageView
+     * @param sellerHomepageModel
      * @param registrationPageModel
      */
     public SellerHomepageView(SellerHomepageModel sellerHomepageModel)  
     {
         model = sellerHomepageModel;
     }
-    /*
-    User getUser()
-    {
-        User user = new User();
-        user.username = usernameText.getText();
-        user.password = new String(passwordText.getPassword());
-        
-        user.email = emailText.getText();
-        user.address = addressText.getText();
-        user.phone = phoneText.getText();
-        user.DOB = DOBText.getText();
-        
-        user.accountType = sellerRadio.isEnabled();
-        
-        return user;
-    }
-    */
     
     void showErrorMessage(String error) 
     {
@@ -110,6 +101,7 @@ public class SellerHomepageView extends GenericView implements Observer
         addNewProductButton = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
+        productList = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Seller Homepage");
@@ -179,18 +171,30 @@ public class SellerHomepageView extends GenericView implements Observer
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel2.setText("Current Listings");
 
+        javax.swing.GroupLayout productListLayout = new javax.swing.GroupLayout(productList);
+        productList.setLayout(productListLayout);
+        productListLayout.setHorizontalGroup(
+            productListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        productListLayout.setVerticalGroup(
+            productListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 333, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(productList, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 552, Short.MAX_VALUE)
                         .addComponent(addNewProductButton))
-                    .addComponent(jSeparator1))
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.LEADING))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -202,7 +206,9 @@ public class SellerHomepageView extends GenericView implements Observer
                     .addComponent(addNewProductButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(350, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(productList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -241,6 +247,7 @@ public class SellerHomepageView extends GenericView implements Observer
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JButton logoutButton;
     private javax.swing.JButton merchantAnalyticsButton;
+    private javax.swing.JPanel productList;
     private javax.swing.JButton viewAccountButton;
     private javax.swing.JLabel welcomeUserLabel;
     // End of variables declaration//GEN-END:variables
@@ -257,14 +264,57 @@ public class SellerHomepageView extends GenericView implements Observer
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    
+
     @Override
     public void update(Observable observable, Object arg) 
     {
         model = (SellerHomepageModel)observable;
         showErrorMessage(model.getErrorMessage());
-        welcomeUser(model.user.username);
+        welcomeUser(model.getUser().username);
         
-        //enableRegisterButton(model.getRegisterEnable());
+        
+        LinkedList<Product> product =  model.getProducts();
+        productList.removeAll();
+        
+        productList.setLayout(new GridLayout(product.size(), 1));
+        //productList.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        
+        System.out.println("Products :" + product.size());
+        
+        product.stream().map((item) -> 
+        {
+            System.out.println("Products :" + item.title);
+            return item;
+        }).forEachOrdered((item) -> 
+        {
+            JPanel line = new JPanel();
+            line.setLayout(new GridLayout(1, 4));
+            line.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        
+            JLabel image = new JLabel();
+            image.setText("");
+            image.removeAll();
+            image.getHeight();
+            image.getWidth();
+            //image.setSize(100, 100);
+            //image.setPreferredSize(new Dimension(100, 100));
+            //imageLabel.s
+            image.setIcon(item.getImage(100, 100));
+            line.add(image);
+            
+            line.add(new JLabel(item.title));
+            line.add(new JLabel(item.summary));
+            line.add(new JLabel(String.valueOf(item.price)));
+            productList.add(line);
+        });
+
+        //JPanel panel = new JPanel();
+        //remove all components in panel.
+        //panel.removeAll(); 
+        // refresh the panel.
+        productList.updateUI();
+        
         this.displayFrame();
     }
 }

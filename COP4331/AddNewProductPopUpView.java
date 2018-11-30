@@ -39,6 +39,7 @@ public class AddNewProductPopUpView extends GenericView implements Observer
         product.price = (int)(Double.parseDouble(sellingPriceText.getText()) * 100.00);
         product.invoiceCost = (int)(Double.parseDouble(productCostText.getText()) * 100.00);
         product.quantity = (Integer)quantityAvailableSpinner.getValue();
+        product.image = model.getImage();
 
         System.out.println(product);
         System.out.println(product.price);
@@ -93,7 +94,7 @@ public class AddNewProductPopUpView extends GenericView implements Observer
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Seller Homepage");
 
         jLabel4.setText("Description");

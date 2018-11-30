@@ -5,10 +5,12 @@
  */
 package COP4331;
 
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.LinkedList;
 
 /**
  *
@@ -29,11 +31,30 @@ public class SellerHomepageController implements ActionListener, KeyListener
 
     public void displaySellerHomepage()
     {
+        model.setProducts( getUserProducts());
+        
         view.setLayout();
         view.update(model, null);
         view.addObservers();
         addListeners();
+        
         view.setVisible(true);
+    }
+    
+    public LinkedList<Product> getUserProducts()
+    {
+        LinkedList<Product> products = new LinkedList<>();
+        
+        model.getUser().products.stream().map((product) -> 
+        {
+            System.out.println(product);
+            return product;
+        }).forEachOrdered((product) -> 
+        {
+            products.add(database.getProduct(product));
+        });
+        
+        return products;
     }
     
     public void displayOtherPage()
@@ -47,6 +68,17 @@ public class SellerHomepageController implements ActionListener, KeyListener
         //controller.displayLoginPage();
     }
     
+    public void popupClosed(User updatedUser)
+    {
+        System.out.println("Popup closed! Got new user data");
+        System.out.println("Username: " + updatedUser.username);
+        System.out.println("Products: " + updatedUser.products.toString());
+        model.setUser(updatedUser);
+        model.setProducts( getUserProducts());
+        //displaySellerHomepage();
+        //view.update(model, null);
+    }
+    
     void addListeners()
     {
         view.addLogoutButtonListener(this);
@@ -55,9 +87,7 @@ public class SellerHomepageController implements ActionListener, KeyListener
         view.addAddNewProductButtonListener(this);
         
         view.addUserInputListener(this); 
-        
     }
-
 
    public void displayLoginPage()
     {
@@ -74,7 +104,7 @@ public class SellerHomepageController implements ActionListener, KeyListener
     {
         AddNewProductPopUpModel addNewProductPopUpModel = new AddNewProductPopUpModel(user);
         AddNewProductPopUpView addNewProductPopUpView = new AddNewProductPopUpView(addNewProductPopUpModel);
-        AddNewProductPopUpController addNewProductPopUpController = new AddNewProductPopUpController(addNewProductPopUpModel, addNewProductPopUpView);
+        AddNewProductPopUpController addNewProductPopUpController = new AddNewProductPopUpController(this, addNewProductPopUpModel, addNewProductPopUpView);
         addNewProductPopUpController.displayAddNewProductPopUp();
     }
     
@@ -92,7 +122,7 @@ public class SellerHomepageController implements ActionListener, KeyListener
             case "Merchant Analytics":
                 break;
             case "Add New Product":
-                displayAddNewProductPopUp(model.user);
+                displayAddNewProductPopUp(model.getUser());
                 break;
             default:
                 break;
