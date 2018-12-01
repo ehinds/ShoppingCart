@@ -1,16 +1,22 @@
 package COP4331;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 import java.util.LinkedList;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
 
 /**
  *
@@ -59,19 +65,19 @@ public class SellerHomepageView extends GenericView implements Observer
     
     void addMerchantAnalyticsButtonListener(ActionListener actionListener) 
     {
-        System.out.println("Login listener added\n");
+        System.out.println("Merchant Analytics listener added\n");
         merchantAnalyticsButton.addActionListener(actionListener);
     }
     
     void addAddNewProductButtonListener(ActionListener actionListener) 
     {
-        System.out.println("Login listener added\n");
+        System.out.println("AddNewProduct listener added\n");
         addNewProductButton.addActionListener(actionListener);
     }
     
     void addUserInputListener(KeyListener keyListener) 
     {
-        System.out.println("Setting up username and password text action listener\n");
+        //System.out.println("Setting up username and password text action listener\n");
         //usernameText.addKeyListener(keyListener);
         //passwordText.addKeyListener(keyListener);
         //emailText.addKeyListener(keyListener);
@@ -91,41 +97,71 @@ public class SellerHomepageView extends GenericView implements Observer
     private void initComponents() {
 
         jPanel2 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
         welcomeUserLabel = new javax.swing.JLabel();
+        logoutButton = new javax.swing.JButton();
+        viewAccountButton = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JSeparator();
         jLabel1 = new javax.swing.JLabel();
         errorLabel = new javax.swing.JLabel();
-        viewAccountButton = new javax.swing.JButton();
-        merchantAnalyticsButton = new javax.swing.JButton();
-        logoutButton = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
-        addNewProductButton = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        jSeparator1 = new javax.swing.JSeparator();
         productList = new javax.swing.JPanel();
+        addNewProductButton = new javax.swing.JButton();
+        merchantAnalyticsButton = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Seller Homepage");
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
 
         welcomeUserLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        welcomeUserLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        welcomeUserLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         welcomeUserLabel.setText("Hello Username");
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        logoutButton.setText("Logout");
+        logoutButton.setMargin(new java.awt.Insets(2, 4, 2, 4));
+
+        viewAccountButton.setText("View Account");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addComponent(welcomeUserLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(logoutButton))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addComponent(viewAccountButton)
+                        .addGap(6, 6, 6))
+                    .addComponent(jSeparator1))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(logoutButton)
+                    .addComponent(welcomeUserLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(viewAccountButton)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Seller Homepage");
 
         errorLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         errorLabel.setForeground(new java.awt.Color(255, 0, 0));
         errorLabel.setText("[Error Message]");
-
-        viewAccountButton.setText("View Account");
-
-        merchantAnalyticsButton.setText("Merchant Analytics");
-
-        logoutButton.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        logoutButton.setText("Logout");
-        logoutButton.setMargin(new java.awt.Insets(2, 4, 2, 4));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -134,42 +170,31 @@ public class SellerHomepageView extends GenericView implements Observer
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(errorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 372, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(welcomeUserLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(viewAccountButton))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(merchantAnalyticsButton, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(logoutButton, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addContainerGap())
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(103, 103, 103))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(errorLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(7, 7, 7)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(welcomeUserLabel)
-                            .addComponent(logoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(4, 4, 4)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(viewAccountButton)
-                            .addComponent(merchantAnalyticsButton)
-                            .addComponent(errorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jLabel1))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(1, 1, 1)
+                .addComponent(errorLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
 
-        addNewProductButton.setText("Add New Product");
-
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel2.setText("Current Listings");
+        productList.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        productList.setName(""); // NOI18N
 
         javax.swing.GroupLayout productListLayout = new javax.swing.GroupLayout(productList);
         productList.setLayout(productListLayout);
@@ -179,37 +204,44 @@ public class SellerHomepageView extends GenericView implements Observer
         );
         productListLayout.setVerticalGroup(
             productListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 333, Short.MAX_VALUE)
+            .addGap(0, 310, Short.MAX_VALUE)
         );
+
+        addNewProductButton.setText("Add New Product");
+
+        merchantAnalyticsButton.setText("Merchant Analytics");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(productList, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 552, Short.MAX_VALUE)
-                        .addComponent(addNewProductButton))
-                    .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.LEADING))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(merchantAnalyticsButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(addNewProductButton)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(addNewProductButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(merchantAnalyticsButton)
+                    .addComponent(addNewProductButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(productList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
+
+        jLabel2.setFont(new java.awt.Font("Franklin Gothic Demi", 1, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 51, 153));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Current Inventory");
+        jLabel2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -219,7 +251,8 @@ public class SellerHomepageView extends GenericView implements Observer
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -227,7 +260,9 @@ public class SellerHomepageView extends GenericView implements Observer
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(5, 5, 5)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -244,6 +279,7 @@ public class SellerHomepageView extends GenericView implements Observer
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JButton logoutButton;
     private javax.swing.JButton merchantAnalyticsButton;
@@ -256,6 +292,7 @@ public class SellerHomepageView extends GenericView implements Observer
     public void setLayout() 
     {
         initComponents();
+        getContentPane().setBackground(Color.white);
     }
 
     @Override
@@ -263,56 +300,57 @@ public class SellerHomepageView extends GenericView implements Observer
     {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
     
+    public void addUIMouseOverAnimations(ProductSummaryListItem productSummaryListItem)
+    {
+        productSummaryListItem.addMouseListener(new java.awt.event.MouseAdapter() 
+        {
+            @Override
+            public void mouseEntered(java.awt.event.MouseEvent evt) 
+            {
+                Color color = new Color(0xffE7F3FF);
 
+                productSummaryListItem.setBackground(color);
+            }
+
+            @Override
+            public void mouseExited(java.awt.event.MouseEvent evt) 
+            {
+                Color color = new Color(0xffF0F0F0);
+
+                productSummaryListItem.setBackground(color);
+            }
+        });
+    }
+    
+    void displayCurrentInventory()
+    {
+        LinkedList<Product> products =  model.getProducts();
+        productList.removeAll();
+        productList.setLayout(new GridLayout(products.size(), 1));
+        
+        products.stream().map((product) -> 
+        {
+            return product;
+        }).forEachOrdered((product) -> 
+        {
+            ProductSummaryListItem productSummaryListItem = new ProductSummaryListItem();
+            productSummaryListItem.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+            addUIMouseOverAnimations(productSummaryListItem);
+            productList.add(productSummaryListItem.generateLayout(product));
+        });
+    }
+    
     @Override
     public void update(Observable observable, Object arg) 
     {
         model = (SellerHomepageModel)observable;
+        
         showErrorMessage(model.getErrorMessage());
         welcomeUser(model.getUser().username);
         
-        
-        LinkedList<Product> product =  model.getProducts();
-        productList.removeAll();
-        
-        productList.setLayout(new GridLayout(product.size(), 1));
-        //productList.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        
-        System.out.println("Products :" + product.size());
-        
-        product.stream().map((item) -> 
-        {
-            System.out.println("Products :" + item.title);
-            return item;
-        }).forEachOrdered((item) -> 
-        {
-            JPanel line = new JPanel();
-            line.setLayout(new GridLayout(1, 4));
-            line.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        
-            JLabel image = new JLabel();
-            image.setText("");
-            image.removeAll();
-            image.getHeight();
-            image.getWidth();
-            //image.setSize(100, 100);
-            //image.setPreferredSize(new Dimension(100, 100));
-            //imageLabel.s
-            image.setIcon(item.getImage(100, 100));
-            line.add(image);
-            
-            line.add(new JLabel(item.title));
-            line.add(new JLabel(item.summary));
-            line.add(new JLabel(String.valueOf(item.price)));
-            productList.add(line);
-        });
-
-        //JPanel panel = new JPanel();
-        //remove all components in panel.
-        //panel.removeAll(); 
-        // refresh the panel.
+        displayCurrentInventory();
+                
         productList.updateUI();
         
         this.displayFrame();

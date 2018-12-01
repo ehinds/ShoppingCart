@@ -80,7 +80,8 @@ public class AddNewProductPopUpController implements ActionListener
                         //This is where a real application would open the file.
                         System.out.println("Opening: " + file.getName() + ".");
                         originalImage = ImageIO.read(file);
-                        originalImage = resize(originalImage, 289, 264);
+                        
+                        originalImage = resize(originalImage, view.getImagePanelWidth(), view.getImagePanelHeight());
                         ImageIcon image = new ImageIcon(originalImage);
                         model.setImage(image);
                     } 

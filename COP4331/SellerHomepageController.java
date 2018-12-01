@@ -75,8 +75,6 @@ public class SellerHomepageController implements ActionListener, KeyListener
         System.out.println("Products: " + updatedUser.products.toString());
         model.setUser(updatedUser);
         model.setProducts( getUserProducts());
-        //displaySellerHomepage();
-        //view.update(model, null);
     }
     
     void addListeners()
@@ -100,12 +98,34 @@ public class SellerHomepageController implements ActionListener, KeyListener
         loginPageController.displayLoginPage();
     }
    
-   public void displayAddNewProductPopUp(User user)
+    public void displayMerchantAnalytics()
+    {
+        //view.removeAll();
+        //view.dispose();
+        
+       // LoginPageModel loginPageModel = new LoginPageModel();
+        //LoginPageView loginPageView = new LoginPageView(loginPageModel);
+        //LoginPageController loginPageController = new LoginPageController(loginPageModel, loginPageView);
+        //loginPageController.displayLoginPage();
+    }
+   
+    public void displayAddNewProductPopUp(User user)
     {
         AddNewProductPopUpModel addNewProductPopUpModel = new AddNewProductPopUpModel(user);
         AddNewProductPopUpView addNewProductPopUpView = new AddNewProductPopUpView(addNewProductPopUpModel);
         AddNewProductPopUpController addNewProductPopUpController = new AddNewProductPopUpController(this, addNewProductPopUpModel, addNewProductPopUpView);
         addNewProductPopUpController.displayAddNewProductPopUp();
+    }
+    
+    public void displayAccountPage()
+    {
+        view.removeAll();
+        view.dispose();
+        
+        AccountPageModel accountPageModel = new AccountPageModel(model.getUser());
+        AccountPageView accountPageView = new AccountPageView(accountPageModel);
+        AccountPageController accountPageController = new AccountPageController(accountPageModel, accountPageView);
+        accountPageController.displayAccountPage();
     }
     
     @Override
@@ -116,8 +136,12 @@ public class SellerHomepageController implements ActionListener, KeyListener
         switch (command) 
         {
             case "Logout":
+                displayLoginPage();
+                
+                
                 break;
             case "View Account":
+                displayAccountPage();
                 break;
             case "Merchant Analytics":
                 break;
