@@ -23,7 +23,7 @@ public class RegistrationPageView extends GenericView implements Observer
         model = registrationPageModel;
     }
     
-    User getUser()
+    User getUserInformation()
     {
         User user = new User();
         user.username = usernameText.getText();
@@ -34,7 +34,7 @@ public class RegistrationPageView extends GenericView implements Observer
         user.phone = phoneText.getText();
         user.DOB = DOBText.getText();
         
-        user.accountType = sellerRadio.isEnabled();
+        user.accountType = sellerRadio.isSelected();
         
         return user;
     }

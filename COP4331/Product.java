@@ -6,13 +6,14 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Comparator;
 import javax.swing.ImageIcon;
 
 /**
  *
  * @author Brownie
  */
-public class Product 
+public class Product
 {
     public String title;
     String summary;
@@ -20,6 +21,7 @@ public class Product
     int price;
     int quantity;
     int invoiceCost;
+    String category;
     
     ImageIcon image = null;
     
@@ -34,4 +36,10 @@ public class Product
         Image newimg = imageIcon.getScaledInstance(x, y,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way  
         return (new ImageIcon(newimg));  // transform it back
     }
+    
+    public Integer getPrice()
+    {
+        return price;
+    }
+
 }

@@ -95,7 +95,7 @@ public class UpdateItemPopUpController implements ActionListener{
                 }
                 catch(IOException ex)
                 {
-                    Logger.getLogger(AddNewProductPopUpController.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(UpdateItemPopUpController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             
                 break;
@@ -103,13 +103,13 @@ public class UpdateItemPopUpController implements ActionListener{
             case "Update Product":
                 Product product = view.getProduct();
                 
-                if(database.addProduct(product))
+                if(database.updateProduct(product))
                 {
                     model.linkUserProduct(product.title);
 
                     database.updateUserProductLink(model.getUser());
 
-                    System.out.println("Added product to database");
+                    System.out.println("Updated product in database");
 
 
                     model.setUser(database.getUserData(model.getUser()));

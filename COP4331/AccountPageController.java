@@ -112,6 +112,30 @@ public class AccountPageController implements ActionListener, KeyListener
         model.setAccountInformationEnabled(false);
     }
     
+    public void displayCustomerHomepage(User user)
+    {
+        view.removeAll();
+        view.dispose();
+        
+        CustomerHomepageModel customerHomepageModel = new CustomerHomepageModel(user);
+        CustomerHomepageView customerHomepageView = new CustomerHomepageView(customerHomepageModel);
+        CustomerHomepageController customerHomepageController = new CustomerHomepageController(customerHomepageModel, customerHomepageView);
+        customerHomepageController.displayCustomerHomepage();
+    }
+    
+    public void updatePassword()
+    {
+       if (view.passwordCheck())
+       {
+            database.updatePassword(view.getPassword());
+            model.setUser(database.getUserData(model.getUser()));
+            displaySellerHomepage(model.getUser());
+       }
+       else
+       {
+           model.setErrorMessage("Current password does not match actual password");
+       }       
+    }
     
     public void displaySellerHomepage(User user)
     {
@@ -148,7 +172,20 @@ public class AccountPageController implements ActionListener, KeyListener
         else if(command.equals("Back"))
         {
             System.out.println("Back");
-            displaySellerHomepage(model.getUser());
+            if(model.getUser().accountType)
+            {
+                displaySellerHomepage(model.getUser());
+            }
+            else
+            {
+                displayCustomerHomepage(model.getUser());
+            }
+            
+        }
+         else if(model.getAccountInformationEnabled())
+        {
+             System.out.println("getAccountInformationEnabled()");
+             updatePassword();                 
         }
         else if(command.equals("Save"))
         {

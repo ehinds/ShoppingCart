@@ -43,6 +43,21 @@ public class LoginPageController implements ActionListener, KeyListener
         sellerHomepageController.displaySellerHomepage();
     }
     
+    public void displayCustomerHomepage(User user)
+    {
+        view.removeAll();
+        view.dispose();
+        
+        CustomerHomepageModel customerHomepageModel = new CustomerHomepageModel(user);
+        CustomerHomepageView customerHomepageView = new CustomerHomepageView(customerHomepageModel);
+        CustomerHomepageController customerHomepageController = new CustomerHomepageController(customerHomepageModel, customerHomepageView);
+        customerHomepageController.displayCustomerHomepage();
+    }
+    
+    
+    
+    
+    
     void addListeners()
     {
         view.addLoginButtonListener(this);
@@ -79,13 +94,15 @@ public class LoginPageController implements ActionListener, KeyListener
                 if(loginSuccess)
                 {
                     user = database.getUserData(user);
+                    System.out.println("user.accountType: " + user.accountType);
+                    
                     if(user.accountType)
                     {
                         displaySellerHomepage(user);
                     }
                     else
                     {
-                        //displayCustomerHomepage();
+                        displayCustomerHomepage(user);
                     }
                 }
                 else

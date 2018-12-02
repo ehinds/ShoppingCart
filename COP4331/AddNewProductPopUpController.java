@@ -99,7 +99,7 @@ public class AddNewProductPopUpController implements ActionListener
                 
             case "Add Product":
                 Product product = view.getProduct();
-                
+                System.out.println("Product product = view.getProduct();" + product.category);
                 if(database.addProduct(product))
                 {
                     model.linkUserProduct(product.title);

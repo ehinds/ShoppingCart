@@ -6,6 +6,7 @@ import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.util.Observable;
 import java.util.Observer;
+import java.text.DecimalFormat;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
@@ -19,7 +20,7 @@ public class UpdateItemPopUpView extends GenericView implements Observer
 
     /**
      * Creates new form RegistrationPageView
-     * @param addNewProductPopUpModel
+     * @param updateItemPopUpModel
      */
     public UpdateItemPopUpView(UpdateItemPopUpModel updateItemPopUpModel)  
     {
@@ -34,7 +35,7 @@ public class UpdateItemPopUpView extends GenericView implements Observer
     Product getProduct()
     {
         Product product = new Product();
-        product.title = titleText.getText();
+        product.title = model.getProduct().title;
         product.summary = summaryText.getText();
         product.description = descriptionText.getText();
         product.price = (int)(Double.parseDouble(sellingPriceText.getText()) * 100.00);
@@ -46,7 +47,6 @@ public class UpdateItemPopUpView extends GenericView implements Observer
         System.out.println(product.price);
         return product;
     }
-
     
     void addUpdateProductButtonListener(ActionListener actionListener) 
     {
@@ -83,7 +83,6 @@ public class UpdateItemPopUpView extends GenericView implements Observer
 
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        titleText = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         summaryText = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
@@ -107,6 +106,7 @@ public class UpdateItemPopUpView extends GenericView implements Observer
         jLabel11 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         quantityAvailableSpinner = new javax.swing.JSpinner();
+        jLabel12 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Add New Product");
@@ -115,7 +115,7 @@ public class UpdateItemPopUpView extends GenericView implements Observer
         jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel2.setText("Title");
+        jLabel2.setText("Title:");
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel3.setText("Summary");
@@ -239,15 +239,14 @@ public class UpdateItemPopUpView extends GenericView implements Observer
                 .addContainerGap(50, Short.MAX_VALUE))
         );
 
+        jLabel12.setText("jLabel12");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(titleText))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(summaryText))
@@ -281,6 +280,10 @@ public class UpdateItemPopUpView extends GenericView implements Observer
                         .addContainerGap()
                         .addComponent(errorLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 566, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -292,8 +295,8 @@ public class UpdateItemPopUpView extends GenericView implements Observer
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(titleText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(summaryText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -344,6 +347,7 @@ public class UpdateItemPopUpView extends GenericView implements Observer
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -361,7 +365,6 @@ public class UpdateItemPopUpView extends GenericView implements Observer
     private javax.swing.JSpinner quantityAvailableSpinner;
     private javax.swing.JFormattedTextField sellingPriceText;
     private javax.swing.JTextField summaryText;
-    private javax.swing.JTextField titleText;
     private javax.swing.JButton updateProductButton;
     private javax.swing.JButton uploadImageButton;
     // End of variables declaration//GEN-END:variables
@@ -371,6 +374,16 @@ public class UpdateItemPopUpView extends GenericView implements Observer
     {
         initComponents();
         getContentPane().setBackground(Color.white);
+        DecimalFormat dc = new DecimalFormat("0.00");
+        jLabel12.setText(model.getProduct().title);
+        summaryText.setText(model.getProduct().summary);
+        descriptionText.setText(model.getProduct().description);
+        String price = dc.format((model.getProduct().price)/(double)100.0);
+        sellingPriceText.setText(price);
+        String cost = dc.format((model.getProduct().invoiceCost/(double)100.0));
+        productCostText.setText(cost);
+        quantityAvailableSpinner.setValue(model.getProduct().quantity);
+        model.setImage(model.getProduct().image);
     }
 
     @Override

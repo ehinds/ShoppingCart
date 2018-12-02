@@ -17,6 +17,7 @@ import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -92,7 +93,8 @@ public class Database implements java.io.Serializable
                 + "	price integer,\n"
                 + "	cost integer,\n"
                 + "	quantity integer,\n"
-                + "	image blob\n"
+                + "	image blob,\n"
+                + "     category text\n"
 
                 + ");";
 
@@ -167,7 +169,7 @@ public class Database implements java.io.Serializable
     public boolean addProduct(Product product)
     {
         {
-            String sql = "INSERT INTO products(title, summary, description, price, cost, quantity, image) VALUES(?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO products(title, summary, description, price, cost, quantity, image, category) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
 
             System.out.println("Inserting product");
             try(
@@ -183,7 +185,37 @@ public class Database implements java.io.Serializable
                 pstmt.setObject(6, product.quantity);
                 //pstmt.setObject(7, product.image);
                 pstmt.setBytes(7, objectToByteArray(product.image));
+                pstmt.setObject(8, product.category);
                 //pstmt.setDouble(2, capacity);
+                pstmt.executeUpdate();
+                return true;
+            } catch (SQLException e) 
+            {
+                System.out.println(e.getMessage());
+                return false;
+            }
+        }
+    }
+    
+           public boolean updateProduct(Product product)
+    {
+        {
+            String sql = "UPDATE products SET summary = ?, description = ?, price = ?, cost = ?, quantity = ?, image = ? WHERE title = ?";
+
+            System.out.println("Updating product");
+            try(
+                    Connection connection = DriverManager.getConnection(url);
+                    PreparedStatement pstmt = connection.prepareStatement(sql)
+                ) 
+            {
+                pstmt.setObject(1, product.summary);
+                pstmt.setObject(2, product.description);
+                pstmt.setObject(3, product.price);
+                pstmt.setObject(4, product.invoiceCost);
+                pstmt.setObject(5, product.quantity);
+                //pstmt.setObject(7, product.image);
+                pstmt.setBytes(6, objectToByteArray(product.image));
+                pstmt.setObject(7, product.title);
                 pstmt.executeUpdate();
                 return true;
             } catch (SQLException e) 
@@ -314,6 +346,7 @@ public class Database implements java.io.Serializable
                 //product.image = (ImageIcon)resultSet.getObject("image");
                 
                 product.image = (ImageIcon)byteArrayToObject(resultSet.getBinaryStream("image"));
+                product.category = (String)resultSet.getObject("category");
 
                 return product;
             }
@@ -325,6 +358,28 @@ public class Database implements java.io.Serializable
             return product;
         }
     }
+    
+     public void updatePassword(User user)
+   {
+       String sql = "UPDATE users SET password = ? WHERE username = ?";
+
+       try
+       (
+           Connection conn = this.connect();
+           PreparedStatement pstmt = conn.prepareStatement(sql)
+       )
+       {
+
+           pstmt.setString(1, user.password);
+            pstmt.setString(2, user.username);
+           pstmt.executeUpdate();
+            System.out.println("Updated database information for " + user.username);
+       } 
+       catch (SQLException e) 
+       {
+           System.out.println(e.getMessage());
+       }
+   }
     
     public byte[] objectToByteArray(Object object)
     {
@@ -343,6 +398,80 @@ public class Database implements java.io.Serializable
         return baos.toByteArray();
     }
 
+    public LinkedList<String> findAllCategories()
+    {
+        LinkedList<String> categories = new LinkedList<>();
+
+        String sql = "SELECT * FROM products";
+        
+        try (Connection connection = DriverManager.getConnection(url);
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(sql))
+        {
+            while (resultSet.next()) 
+            {
+                categories.add((String)resultSet.getObject("category"));
+            }
+            
+            return categories;
+        } catch (SQLException e) 
+        {
+            System.out.println(e.getMessage());
+            return categories;
+        }
+    }
+    
+    public LinkedList<String> getProductsByCategory(String category)
+    {
+        String sql = "SELECT * FROM products WHERE category = \"" + category + "\"";
+        LinkedList<String> products = new LinkedList<>();
+                
+                
+        try (Connection connection = DriverManager.getConnection(url);
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(sql))
+        {
+            while (resultSet.next()) 
+            {
+                products.add(((String)resultSet.getObject("title")));
+                
+            }
+            return products;
+        } catch (SQLException e) 
+        {
+            System.out.println(e.getMessage());
+            System.out.println("EMPTY RESULT");
+            return products;
+        }
+    }
+    
+    public String getRandomProduct(String category)
+    {
+        String sql = "SELECT * FROM products WHERE category = \"" + category + "\" ORDER BY RANDOM() LIMIT 1";
+        String result = "";
+        try (Connection connection = DriverManager.getConnection(url);
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(sql))
+        {
+            while (resultSet.next()) 
+            {
+                if(result != "")
+                {
+                    System.out.println("RESULT ALREADY SET");
+                }
+                result = ((String)resultSet.getObject("title"));
+                
+            }
+            return result;
+        } catch (SQLException e) 
+        {
+            System.out.println(e.getMessage());
+            System.out.println("EMPTY RESULT");
+            return "";
+        }
+    }
+    
+    
     public void updateUserProductLink(User user)
     {
         String sql = "UPDATE users SET products = ? WHERE username = ?";

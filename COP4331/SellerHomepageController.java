@@ -99,6 +99,7 @@ public class SellerHomepageController implements ActionListener, KeyListener
         view.addMerchantAnalyticsButtonListener(this);
         view.addAddNewProductButtonListener(this);
         view.addRemoveListingListener(this);
+        view.addUpdateListingListener(this);
         view.addUserInputListener(this); 
     }
 
@@ -130,14 +131,6 @@ public class SellerHomepageController implements ActionListener, KeyListener
         AddNewProductPopUpView addNewProductPopUpView = new AddNewProductPopUpView(addNewProductPopUpModel);
         AddNewProductPopUpController addNewProductPopUpController = new AddNewProductPopUpController(this, addNewProductPopUpModel, addNewProductPopUpView);
         addNewProductPopUpController.displayAddNewProductPopUp();
-    }
-    
-    public void displayUpdateItemPopUp(User user)
-    {
-        UpdateItemPopUpModel updateItemPopUpModel = new UpdateItemPopUpModel(user);
-        UpdateItemPopUpView updateItemPopUpView = new UpdateItemPopUpView(updateItemPopUpModel);
-        UpdateItemPopUpController updateItemPopUpController = new UpdateItemPopUpController(this, updateItemPopUpModel, updateItemPopUpView);
-        updateItemPopUpController.displayUpdateItemPopUp();
     }
     
     public void displayAccountPage()
@@ -191,7 +184,10 @@ public class SellerHomepageController implements ActionListener, KeyListener
                 break;
             case "Update Listing":
                 JButton button1 = (JButton)source;
-                displayUpdateItemPopUp(model.getUser());   
+                UpdateItemPopUpModel updateItemPopUpModel = new UpdateItemPopUpModel(model.getUser(), database.getProduct(button1.getName()));
+                UpdateItemPopUpView updateItemPopUpView = new UpdateItemPopUpView(updateItemPopUpModel);
+                UpdateItemPopUpController updateItemPopUpController = new UpdateItemPopUpController(this, updateItemPopUpModel, updateItemPopUpView);
+                updateItemPopUpController.displayUpdateItemPopUp();
                 break;
             default:
                 break;

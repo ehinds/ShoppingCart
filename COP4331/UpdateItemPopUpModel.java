@@ -25,15 +25,27 @@ public class UpdateItemPopUpModel extends Observable{
         return user;
     }
     
+     public Product getProduct()
+    {
+        return product;
+    }
+    
     public void setUser(User updatedUser)
     {
         user = updatedUser;
         update();
     }
     
-    public UpdateItemPopUpModel(User loadUser)
+        public void setProduct(Product product)
+    {
+        this.product = product;
+        update();
+    }
+    
+    public UpdateItemPopUpModel(User loadUser, Product product)
     {
         user = loadUser;
+        this.product = product;
     }
     
     public void linkUserProduct(String title)

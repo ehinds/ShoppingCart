@@ -61,7 +61,7 @@ public class RegistrationPageController implements ActionListener, KeyListener
     {
         try 
         {
-            User user = view.getUser();
+            User user = view.getUserInformation();
             System.out.println("Generated new user: " + user.products);
             
             boolean userExists = database.userExists(user.username);
@@ -131,7 +131,7 @@ public class RegistrationPageController implements ActionListener, KeyListener
     public void userListener()
     {
         System.out.println("User listener called");
-        User user = view.getUser();
+        User user = view.getUserInformation();
         boolean readyToRegister = (user.username.length() >= 5 && user.password.length() >= 5 && user.email.length() >= 5 && user.address.length() >= 5 && user.phone.length() >= 5 && user.DOB.length() >= 5);
 
         try 
