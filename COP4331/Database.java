@@ -197,10 +197,10 @@ public class Database implements java.io.Serializable
         }
     }
     
-           public boolean updateProduct(Product product)
+               public boolean updateProduct(Product product)
     {
         {
-            String sql = "UPDATE products SET summary = ?, description = ?, price = ?, cost = ?, quantity = ?, image = ? WHERE title = ?";
+            String sql = "UPDATE products SET summary = ?, description = ?, price = ?, cost = ?, quantity = ?, image = ?, category = ? WHERE title = ?";
 
             System.out.println("Updating product");
             try(
@@ -215,7 +215,8 @@ public class Database implements java.io.Serializable
                 pstmt.setObject(5, product.quantity);
                 //pstmt.setObject(7, product.image);
                 pstmt.setBytes(6, objectToByteArray(product.image));
-                pstmt.setObject(7, product.title);
+                pstmt.setObject(7, product.category);
+                pstmt.setObject(8, product.title);
                 pstmt.executeUpdate();
                 return true;
             } catch (SQLException e) 

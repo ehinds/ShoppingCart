@@ -32,6 +32,7 @@ import javax.swing.border.EmptyBorder;
 public class ProductPageView extends GenericView implements Observer
 {
     private ProductPageModel model;
+    LinkedList<ProductSummaryListItem> productSummaryListItems = new LinkedList<>();
     
     MouseListener controllerMouseListener;
 
@@ -82,6 +83,22 @@ public class ProductPageView extends GenericView implements Observer
         System.out.println("Sort listener added\n");
         sortBox.addActionListener(actionListener);
     }
+    
+    void addShoppingCartEventListener(ActionListener actionListener) 
+    {
+        System.out.println("Add to cart listener added\n");
+        shoppingCartButton.addActionListener(actionListener);
+    }
+    
+    void addAddToCartListener(ActionListener actionListener) 
+    {
+        for (int i = 0; i < productSummaryListItems.size(); i++) 
+        {
+            productSummaryListItems.get(i).getAddToCartButton().addActionListener(actionListener);
+            //int value = (int)((ProductSummaryListItem)(productSummaryListItems.get(i).getAddToCartButton().getParent())).getCountSpinner().getValue();
+
+        }
+    }
 
     void displayCurrentInventory(String sort)
     {
@@ -122,7 +139,7 @@ public class ProductPageView extends GenericView implements Observer
         {
             //LinkedList<ProductSummaryListItem> productSummaryListItems = new LinkedList<>();
             //System.out.println(p.title);
-            //productSummaryListItems = new LinkedList<>();
+            productSummaryListItems = new LinkedList<>();
             ProductSummaryListItem productSummaryListItem = new ProductSummaryListItem();
             productSummaryListItem.setBorder(BorderFactory.createLineBorder(Color.BLACK));
             addUIMouseOverAnimations(productSummaryListItem);     // Local listener
@@ -132,89 +149,16 @@ public class ProductPageView extends GenericView implements Observer
             productSummaryListItem.getCountSpinner().setVisible(true);
             
             System.out.println("Adding: " ); 
-            //productSummaryListItems.add(productSummaryListItem);
+            productSummaryListItems.add(productSummaryListItem);
             //productSummaryListItems.addFirst(productSummaryListItem);// For inverse sorting
             productList.add(productSummaryListItem.generateLayout(products.get(i), false));
             productList.updateUI();
         }
-        /*
-        products.forEach((p) -> 
-        {
-            //LinkedList<ProductSummaryListItem> productSummaryListItems = new LinkedList<>();
-            System.out.println(p.title);
-            //productSummaryListItems = new LinkedList<>();
-            ProductSummaryListItem productSummaryListItem = new ProductSummaryListItem();
-            productSummaryListItem.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-            addUIMouseOverAnimations(productSummaryListItem);     // Local listener
-            productSummaryListItem.addMouseListener(controllerMouseListener);   //  Controller listener
-            //productSummaryListItem.remove(productSummaryListItem.getRemoveButton());
-            productSummaryListItem.getRemoveButton().setVisible(false);
-
-            
-            System.out.println("Adding: " ); 
-            //productSummaryListItems.add(productSummaryListItem);
-            //productSummaryListItems.addFirst(productSummaryListItem);// For inverse sorting
-            productList.add(productSummaryListItem.generateLayout(p));
-
-        }); 
-*/
-//==============
-/*
-        ProductSummaryListItem productSummaryListItem = new ProductSummaryListItem();
-            productSummaryListItem.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-            addUIMouseOverAnimations(productSummaryListItem);     // Local listener
-            productSummaryListItem.addMouseListener(controllerMouseListener);   //  Controller listener
-            //productSummaryListItem.remove(productSummaryListItem.getRemoveButton());
-            productSummaryListItem.getRemoveButton().setVisible(false);
-
-        
-        products.forEach((p) -> 
-        {
-            final Product prod = p;
-            System.out.println(p.title);
-            
-            productSummaryListItems.add(productSummaryListItem);
-            productList.add(productSummaryListItem.generateLayout(p));
-        });
-*/
-        /*
-        products.stream().map((product) -> 
-        {
-            return product;
-        }).forEachOrdered((Product product) -> 
-        {
-            if(product == null)
-            {
-                //model.removeProduct(product.title);
-                //database.updateUserProductLink(model.getUser());
-            }
-            else
-            {
-                ProductSummaryListItem productSummaryListItem = new ProductSummaryListItem();
-                productSummaryListItem.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-                addUIMouseOverAnimations(productSummaryListItem);     // Local listener
-                productSummaryListItem.addMouseListener(controllerMouseListener);   //  Controller listener
-                //productSummaryListItem.remove(productSummaryListItem.getRemoveButton());
-                productSummaryListItem.getRemoveButton().setVisible(false);
-                
-                productSummaryListItems.add(productSummaryListItem);
-                //productSummaryListItems.addFirst(productSummaryListItem);// For inverse sorting
-                productList.add(productSummaryListItem.generateLayout(product));
-            }
-
-        });
-        */
     }
     
     void addUserInputListener(KeyListener keyListener) 
     {
-        //System.out.println("Setting up username and password text action listener\n");
-        //usernameText.addKeyListener(keyListener);
-        //passwordText.addKeyListener(keyListener);
-        //emailText.addKeyListener(keyListener);
-        //phoneText.addKeyListener(keyListener);
-        //addressText.addKeyListener(keyListener);
-        //DOBText.addKeyListener(keyListener);
+
     }
     
     
@@ -233,6 +177,7 @@ public class ProductPageView extends GenericView implements Observer
         logoutButton = new javax.swing.JButton();
         viewAccountButton = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
+        shoppingCartButton = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         errorLabel = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
@@ -255,6 +200,8 @@ public class ProductPageView extends GenericView implements Observer
 
         viewAccountButton.setText("View Account");
 
+        shoppingCartButton.setText("Shopping Cart");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -267,6 +214,8 @@ public class ProductPageView extends GenericView implements Observer
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(logoutButton))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addComponent(shoppingCartButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(viewAccountButton)
                         .addGap(6, 6, 6))
                     .addComponent(jSeparator1))
@@ -282,7 +231,9 @@ public class ProductPageView extends GenericView implements Observer
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(viewAccountButton)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(viewAccountButton)
+                    .addComponent(shoppingCartButton))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -421,6 +372,7 @@ public class ProductPageView extends GenericView implements Observer
     private javax.swing.JButton logoutButton;
     private javax.swing.JPanel productList;
     private javax.swing.JLabel productsPageSubTitle;
+    private javax.swing.JButton shoppingCartButton;
     private javax.swing.JComboBox<String> sortBox;
     private javax.swing.JButton viewAccountButton;
     private javax.swing.JLabel welcomeUserLabel;

@@ -22,6 +22,8 @@ public class User
     String creditCard;
     String bankAccount;
     
+
+    LinkedList<CartItem> cartItems = new LinkedList<>();
     LinkedList<String> products = new LinkedList<>();
     
     public User() 
@@ -40,6 +42,20 @@ public class User
          System.out.println("User products: " + products);
     }
     
+    public void addItemToCart(String name, int count)
+    {
+        CartItem cartItem = new CartItem();
+        cartItem.title = name;
+        cartItem.count = count;
+        cartItems.add(cartItem);
+    }
+    
+    public class CartItem
+    {
+        String title;
+        int count;
+    }
+
     public String serializeProducts()
     {
          //System.out.println(resultSet.getObject(user.products.toString()));

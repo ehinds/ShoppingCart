@@ -50,6 +50,8 @@ public class ProductSummaryListItem extends javax.swing.JPanel
         titleLabel.setText(product.title);
         removeListing.setName(product.title);
         updateListing.setName(product.title);
+        addToCartButton.setName(product.title);
+        countSpinner.setName(product.title);
 
         priceLabel.setText("$" + String.valueOf(product.price / 100.00));
         summaryLabel.setText("<html>" + product.summary + "</html>");
@@ -62,7 +64,7 @@ public class ProductSummaryListItem extends javax.swing.JPanel
         return removeListing;
     }
     
-    public JButton getUpdateButton()
+        public JButton getUpdateButton()
     {
         return updateListing;
     }
@@ -130,9 +132,9 @@ public class ProductSummaryListItem extends javax.swing.JPanel
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(titleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(updateListing))
+                                .addComponent(titleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(updateListing, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(priceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)

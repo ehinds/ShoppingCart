@@ -5,6 +5,7 @@
  */
 package COP4331;
 
+import COP4331.User.CartItem;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -103,6 +104,8 @@ public class ProductPageController implements ActionListener, KeyListener, Mouse
         //view.addMerchantAnalyticsButtonListener(this);
         //view.addAddNewProductButtonListener(this);
         //view.addRemoveListingListener(this);
+        view.addShoppingCartEventListener(this);
+        view.addAddToCartListener(this);
         view.addSortEventListener(this);
         view.addUserInputListener(this); 
     }
@@ -158,6 +161,22 @@ public class ProductPageController implements ActionListener, KeyListener, Mouse
                 break;
             case "View Account":
                 displayAccountPage();
+                break;
+            case "Add to Cart":
+                System.out.println("Add to cart");
+                JButton button;
+                button = (JButton)source;
+                //productSummaryListItem.get(i).getAddToCartButton().addActionListener(actionListener);
+                
+                //int count = (int)(((JButton)source.getParent())).getCountSpinner().getValue();
+                model.getUser().addItemToCart(button.getName(), 1);
+                view.addAddToCartListener(this);
+
+                
+                
+                break;
+            case "Shopping Cart":
+                System.out.println("Shopping Cart");
                 break;
                 
             case "Alphabetical  ↑":

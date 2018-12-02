@@ -84,10 +84,13 @@ public class SellerHomepageView extends GenericView implements Observer
         for (int i = 0; i < productSummaryListItems.size(); i++) 
         {
             System.out.println("addRemoveListingListener added for " + productSummaryListItems.get(i).getRemoveButton().getName());
+            //productSummaryListItems.get(i).getRemoveButton().addActionListener(actionListener);
+            
             productSummaryListItems.get(i).getRemoveButton().addActionListener(actionListener);
         }
     }
     
+        
         void addUpdateListingListener(ActionListener actionListener) 
     {
         for (int j = 0; j < productSummaryListItems.size(); j++) 
