@@ -181,7 +181,7 @@ public class AccountPageController implements ActionListener, KeyListener
             else if(model.getAccountInformationEnabled())
             {
                  System.out.println("getAccountInformationEnabled()");
-                 
+                 updatePassword(); 
             }
             
             //getUserBillingInfo()
