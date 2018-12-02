@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.LinkedList;
+import javax.swing.JButton;
 
 /**
  *
@@ -51,7 +52,17 @@ public class SellerHomepageController implements ActionListener, KeyListener
             return product;
         }).forEachOrdered((product) -> 
         {
-            products.add(database.getProduct(product));
+            if(database.getProduct(product).title == null)
+            {
+                System.out.println("Found null product");
+                model.removeProduct(product);
+                database.updateUserProductLink(model.getUser());
+            }
+            else
+            {
+                products.add(database.getProduct(product));
+            }
+            
         });
         
         return products;
@@ -83,7 +94,7 @@ public class SellerHomepageController implements ActionListener, KeyListener
         view.addViewAccountButtonListener(this);
         view.addMerchantAnalyticsButtonListener(this);
         view.addAddNewProductButtonListener(this);
-        
+        view.addRemoveListingListener(this);
         view.addUserInputListener(this); 
     }
 
@@ -132,13 +143,14 @@ public class SellerHomepageController implements ActionListener, KeyListener
     public void actionPerformed(ActionEvent event) 
     {
         String command = event.getActionCommand();
+        Object source = event.getSource();
+        
+        System.out.println(command + "Action Performed on " + source);
         
         switch (command) 
         {
             case "Logout":
                 displayLoginPage();
-                
-                
                 break;
             case "View Account":
                 displayAccountPage();
@@ -147,6 +159,23 @@ public class SellerHomepageController implements ActionListener, KeyListener
                 break;
             case "Add New Product":
                 displayAddNewProductPopUp(model.getUser());
+                break;
+            case "Remove Listing":
+                JButton button;
+                button = (JButton)source;
+                
+                if(database.deleteProduct(button.getName()))
+                {
+                    model.removeProduct(button.getName());
+                    
+                    database.updateUserProductLink(model.getUser());
+                    System.out.println("Successfully deleted " + button.getName());
+                    //view.update(model, null);
+                }
+                else
+                {
+                    System.out.println("Error occured while deleting  " + button.getName());
+                }
                 break;
             default:
                 break;

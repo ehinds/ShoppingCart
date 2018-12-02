@@ -121,7 +121,7 @@ public class AddNewProductPopUpView extends GenericView implements Observer
         jLabel3.setText("Summary");
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel4.setText("Detailed Discription");
+        jLabel4.setText("Detailed Description");
 
         descriptionText.setColumns(20);
         descriptionText.setRows(5);

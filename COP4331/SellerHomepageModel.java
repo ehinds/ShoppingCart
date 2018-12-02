@@ -42,6 +42,18 @@ public class SellerHomepageModel extends Observable
         update();
     }
     
+    public void removeProduct(String title)
+    {
+        for (int i = 0; i < products.size(); i++) 
+        {
+            if(products.get(i).title.compareTo(title) == 0)
+            {
+                System.out.println("Found one: " + products.remove(i));
+            }
+        }
+        update();
+    }
+    
     public LinkedList<Product> getProducts()
     {
         return products;

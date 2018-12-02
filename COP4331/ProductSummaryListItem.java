@@ -2,7 +2,9 @@ package COP4331;
 
 import java.awt.Color;
 import java.awt.Font;
+import javafx.scene.Parent;
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 
 /**
@@ -11,7 +13,6 @@ import javax.swing.JLabel;
  */
 public class ProductSummaryListItem extends javax.swing.JPanel 
 {
-
     /**
      * Creates new form productSummaryListItem
      */
@@ -22,16 +23,23 @@ public class ProductSummaryListItem extends javax.swing.JPanel
     
     public ProductSummaryListItem generateLayout(Product product)
     {
-        System.out.println("Generating product layout for " + product.title);
+        System.out.println("Generating product layout for " + product.title + ". " + product.description);
         imageLabel.setText("");
         imageLabel.setHorizontalAlignment(JLabel.CENTER);
         imageLabel.setIcon(product.getImage(150, 150));
 
         titleLabel.setText(product.title);
+        removeListing.setName(product.title);
+
         priceLabel.setText("$" + String.valueOf(product.price / 100.00));
         summaryLabel.setText("<html>" + product.summary + "</html>");
         
         return this;
+    }
+    
+    public JButton getRemoveButton()
+    {
+        return removeListing;
     }
 
     /**
@@ -48,6 +56,7 @@ public class ProductSummaryListItem extends javax.swing.JPanel
         priceLabel = new javax.swing.JLabel();
         summaryLabel = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
+        removeListing = new javax.swing.JButton();
 
         imageLabel.setText("[imageLabel]");
 
@@ -59,6 +68,9 @@ public class ProductSummaryListItem extends javax.swing.JPanel
 
         summaryLabel.setText("[summaryLabel]");
 
+        removeListing.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        removeListing.setText("Remove Listing");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -69,9 +81,12 @@ public class ProductSummaryListItem extends javax.swing.JPanel
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(priceLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(titleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(summaryLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 449, Short.MAX_VALUE)
-                    .addComponent(jSeparator1))
+                    .addComponent(summaryLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jSeparator1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(titleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(removeListing)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -80,7 +95,9 @@ public class ProductSummaryListItem extends javax.swing.JPanel
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(titleLabel)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(titleLabel)
+                            .addComponent(removeListing))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(priceLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -99,6 +116,7 @@ public class ProductSummaryListItem extends javax.swing.JPanel
     private javax.swing.JLabel imageLabel;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel priceLabel;
+    private javax.swing.JButton removeListing;
     private javax.swing.JLabel summaryLabel;
     private javax.swing.JLabel titleLabel;
     // End of variables declaration//GEN-END:variables

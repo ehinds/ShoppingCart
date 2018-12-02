@@ -25,6 +25,8 @@ import javax.swing.border.EmptyBorder;
 public class SellerHomepageView extends GenericView implements Observer
 {
     private SellerHomepageModel model;
+    LinkedList<ProductSummaryListItem> productSummaryListItems = new LinkedList<>();
+    
 
     /**
      * Creates new form RegistrationPageView
@@ -73,6 +75,17 @@ public class SellerHomepageView extends GenericView implements Observer
     {
         System.out.println("AddNewProduct listener added\n");
         addNewProductButton.addActionListener(actionListener);
+    }
+    
+    void addRemoveListingListener(ActionListener actionListener) 
+    {
+
+        for (int i = 0; i < productSummaryListItems.size(); i++) 
+        {
+            System.out.println("addRemoveListingListener added\n");
+            productSummaryListItems.get(i).getRemoveButton().addActionListener(actionListener);
+        }
+        
     }
     
     void addUserInputListener(KeyListener keyListener) 
@@ -329,15 +342,28 @@ public class SellerHomepageView extends GenericView implements Observer
         productList.removeAll();
         productList.setLayout(new GridLayout(products.size(), 1));
         
+        productSummaryListItems = new LinkedList<>();
+        
         products.stream().map((product) -> 
         {
             return product;
-        }).forEachOrdered((product) -> 
+        }).forEachOrdered((Product product) -> 
         {
-            ProductSummaryListItem productSummaryListItem = new ProductSummaryListItem();
-            productSummaryListItem.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-            addUIMouseOverAnimations(productSummaryListItem);
-            productList.add(productSummaryListItem.generateLayout(product));
+            if(product == null)
+            {
+                //model.removeProduct(product.title);
+                //database.updateUserProductLink(model.getUser());
+            }
+            else
+            {
+                ProductSummaryListItem productSummaryListItem = new ProductSummaryListItem();
+                productSummaryListItem.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                addUIMouseOverAnimations(productSummaryListItem);
+
+                productSummaryListItems.add(productSummaryListItem);
+                productList.add(productSummaryListItem.generateLayout(product));
+            }
+
         });
     }
     

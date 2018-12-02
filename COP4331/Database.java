@@ -142,6 +142,27 @@ public class Database implements java.io.Serializable
             return false;
         }
     }
+    
+    public boolean deleteProduct(String title) 
+    {
+        String sql = "DELETE FROM products WHERE title = ?";
+ 
+        try (Connection conn = this.connect();
+                PreparedStatement pstmt = conn.prepareStatement(sql)) 
+        {
+            // set the corresponding param
+            pstmt.setString(1, title);
+            // execute the delete statement
+            pstmt.executeUpdate();
+            return true;
+ 
+        } catch (SQLException e) 
+        {
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
+
 
     public boolean addProduct(Product product)
     {
@@ -228,6 +249,18 @@ public class Database implements java.io.Serializable
                 user.bankAccount = (String) resultSet.getObject("bankAccount");
 
                 user.products = (LinkedList<String>)byteArrayToObject(resultSet.getBinaryStream("products"));
+                
+                for(int i = 0; i < user.products.size(); i++)
+                {
+                    if(isNullProduct(user.products.get(i)))
+                    {
+                        
+                    }
+                    else
+                    {
+                        System.out.println("Found null user: " + user.products.remove(i));  
+                    }
+                }
 
                 return user;
             }
@@ -309,7 +342,7 @@ public class Database implements java.io.Serializable
             
         return baos.toByteArray();
     }
-    
+
     public void updateUserProductLink(User user)
     {
         String sql = "UPDATE users SET products = ? WHERE username = ?";
@@ -330,6 +363,18 @@ public class Database implements java.io.Serializable
         catch (SQLException e) 
         {
             System.out.println(e.getMessage());
+        }
+    }
+    
+    public boolean isNullProduct(String item)
+    {
+        if(getProduct(item).title == null)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
         }
     }
     
