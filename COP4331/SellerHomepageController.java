@@ -132,6 +132,14 @@ public class SellerHomepageController implements ActionListener, KeyListener
         addNewProductPopUpController.displayAddNewProductPopUp();
     }
     
+    public void displayUpdateItemPopUp(User user)
+    {
+        UpdateItemPopUpModel updateItemPopUpModel = new UpdateItemPopUpModel(user);
+        UpdateItemPopUpView updateItemPopUpView = new UpdateItemPopUpView(updateItemPopUpModel);
+        UpdateItemPopUpController updateItemPopUpController = new UpdateItemPopUpController(this, updateItemPopUpModel, updateItemPopUpView);
+        updateItemPopUpController.displayUpdateItemPopUp();
+    }
+    
     public void displayAccountPage()
     {
         view.removeAll();
@@ -180,6 +188,10 @@ public class SellerHomepageController implements ActionListener, KeyListener
                 {
                     System.out.println("Error occured while deleting  " + button.getName());
                 }
+                break;
+            case "Update Listing":
+                JButton button1 = (JButton)source;
+                displayUpdateItemPopUp(model.getUser());   
                 break;
             default:
                 break;
