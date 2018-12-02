@@ -53,6 +53,30 @@ public class AccountPageView extends GenericView implements Observer
         
         return user;
     }
+    
+           User getPassword()
+    {
+        User user = model.getUser();
+        
+        user.password = new String(newPasswordText.getPassword());
+        System.out.println("(getPassword) " + user.password);
+        
+        return user;
+    }
+    
+        boolean passwordCheck()
+    {
+        User user = model.getUser();
+        
+        String p = new String(passwordText.getPassword());
+        if ((user.password).equals(p))
+        {
+            System.out.println("passwords match\n");
+            return true;
+        }
+        System.out.println("passwords don't match\n");    
+        return false;
+    }
 
     void enableSaveButton(boolean enabled) 
     {
