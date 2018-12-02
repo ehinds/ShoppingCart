@@ -104,6 +104,20 @@ public class AccountPageController implements ActionListener, KeyListener
         model.setAccountInformationEnabled(true);
     }
     
+    public void updatePassword()
+    {
+        if (view.passwordCheck())
+        {
+             database.updatePassword(view.getPassword());
+             model.setUser(database.getUserData(model.getUser()));
+             displaySellerHomepage(model.getUser());
+        }
+        else
+        {
+            model.setErrorMessage("Current password does not match actual password");
+        }       
+    }
+    
     void cancelInformationUpdate()
     {
         model.setIsEditing(false);
