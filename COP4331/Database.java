@@ -391,6 +391,31 @@ public class Database implements java.io.Serializable
         }
     }
     
+    public void updateUserBillingInformation(User user)
+    {
+        String sql = "UPDATE users SET email = ?, phone = ?, address = ?, DOB = ? WHERE username = ?";
+ 
+        try
+        (
+            Connection conn = this.connect();
+            PreparedStatement pstmt = conn.prepareStatement(sql)
+        )
+        {
+
+            pstmt.setString(1, user.email);
+            pstmt.setString(2, user.phone);
+            pstmt.setString(3, user.address);
+            pstmt.setString(4, user.DOB);
+            pstmt.setString(5, user.username);
+            pstmt.executeUpdate();
+            System.out.println("Updated database information for " + user.username);
+        } 
+        catch (SQLException e) 
+        {
+            System.out.println(e.getMessage());
+        }
+    }
+    
     public boolean isNullProduct(String item)
     {
         if(getProduct(item).title == null)

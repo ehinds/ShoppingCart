@@ -58,25 +58,42 @@ public class AccountPageController implements ActionListener, KeyListener
         view.addSaveButtonListener(this);
     }
     
-    public void updatePersonalInformation()
-    {
-        database.updateUserPersonalInformation(view.getUserPersonalData());
-
-        model.setUser(database.getUserData(model.getUser()));
-        
-        displaySellerHomepage(model.getUser());
-    }
-   
     void activatePersonalInformation()
     {
         model.setIsEditing(true);
         model.setPersonalDataEnabled(true);
     }
     
+    public void updatePersonalInformation()
+    {
+        database.updateUserPersonalInformation(view.getUserPersonalInfo());
+
+        model.setUser(database.getUserData(model.getUser()));
+        
+        displaySellerHomepage(model.getUser());
+    }
+   
     void activateBillingInformation()
     {
         model.setIsEditing(true);
         model.setBillingInformationEnabled(true);
+    }
+    
+    public void updateBillingInformation()
+    {
+        database.updateUserBillingInformation(view.getUserBillingInfo());
+
+        model.setUser(database.getUserData(model.getUser()));
+        
+        if(model.getUser().accountType)
+        {
+            displaySellerHomepage(model.getUser());
+        }
+        else
+        {
+            //  Customer homepage
+        }
+        
     }
     
     void activatePassword()
@@ -134,11 +151,20 @@ public class AccountPageController implements ActionListener, KeyListener
         else if(command.equals("Save"))
         {
             System.out.println("Save");
+            
             if(model.getPersonalDataEnabled())
+            {
+                updatePersonalInformation();
+            }
+            else if(model.getBillingInformationEnabled())
             {
                 
             }
-            updatePersonalInformation();
+            else if(model.getAccountInformationEnabled())
+            {
+                
+            }
+            
             //getUserBillingInfo()
         }
         else if(command.equals("Cancel"))

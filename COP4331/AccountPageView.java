@@ -23,7 +23,7 @@ public class AccountPageView extends GenericView implements Observer
         model = accountPageModel;
     }
     
-    User getUserPersonalData()
+    User getUserPersonalInfo()
     {
         User user = model.getUser();
         
