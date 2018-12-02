@@ -47,45 +47,24 @@ public class AccountPageController implements ActionListener, KeyListener
     void addListeners()
     {
         view.addBackButtonListener(this);
+        
         view.addEditPersonalInformationButtonListener(this);
+        
         view.addUserInputListener(this);
+        
         view.addEditBillingInformationButtonListener(this);
         view.addEditPasswordButtonListener(this);
+        
         view.addSaveButtonListener(this);
     }
     
     public void updatePersonalInformation()
     {
-        /*
-        try 
-        {
-            User user = view.getUserData();
-            System.out.println("Generated new user: " + user.products);
-            
-            boolean userExists = database.userExists(user.username);
-            if(userExists)
-            {
-                model.setErrorMessage("Username already exists");
-                return;
-            }
-            
-            if(database.insertUser(user))
-            {
-                System.out.println("Inserted user");
-                user = database.getUserData(user);
-                System.out.println("Getting user: " + user.products);
-                displayLoginPage();
-            }
-            else
-            {
-                model.setErrorMessage("Error creating new user");
-            }
-        }
-        catch (NumberFormatException nfex) 
-        {
-            model.setErrorMessage("Login error");
-        }
-        */
+        database.updateUserPersonalInformation(view.getUserPersonalData());
+
+        model.setUser(database.getUserData(model.getUser()));
+        
+        displaySellerHomepage(model.getUser());
     }
    
     void activatePersonalInformation()
@@ -155,7 +134,12 @@ public class AccountPageController implements ActionListener, KeyListener
         else if(command.equals("Save"))
         {
             System.out.println("Save");
+            if(model.getPersonalDataEnabled())
+            {
+                
+            }
             updatePersonalInformation();
+            //getUserBillingInfo()
         }
         else if(command.equals("Cancel"))
         {

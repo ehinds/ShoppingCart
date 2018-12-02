@@ -23,7 +23,7 @@ public class ProductSummaryListItem extends javax.swing.JPanel
     
     public ProductSummaryListItem generateLayout(Product product)
     {
-        System.out.println("Generating product layout for " + product.title + ". " + product.description);
+        System.out.println("Generating product layout for " + product.title);
         imageLabel.setText("");
         imageLabel.setHorizontalAlignment(JLabel.CENTER);
         imageLabel.setIcon(product.getImage(150, 150));

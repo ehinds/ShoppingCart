@@ -23,10 +23,9 @@ public class AccountPageView extends GenericView implements Observer
         model = accountPageModel;
     }
     
-    User getUserData()
+    User getUserPersonalData()
     {
-        User user = new User();
-        user.password = new String(passwordText.getPassword());
+        User user = model.getUser();
         
         user.email = emailText.getText();
         user.address = addressText.getText();
@@ -35,8 +34,23 @@ public class AccountPageView extends GenericView implements Observer
         
         return user;
     }
+    
+    User getUserBillingInfo()
+    {
+        User user = model.getUser();
+        if(user.accountType)
+        {
+            user.bankAccount = billingText.getText();
+        }
+        else
+        {
+            user.creditCard = billingText.getText();
+        }
+        
+        return user;
+    }
 
-    void enableRegisterButton(boolean enabled) 
+    void enableSaveButton(boolean enabled) 
     {
         saveButton.setEnabled(enabled);
     }
@@ -79,7 +93,7 @@ public class AccountPageView extends GenericView implements Observer
     void addSaveButtonListener(ActionListener actionListener) 
     {
         System.out.println("SaveButtonListener added\n");
-        backButton.addActionListener(actionListener);
+        saveButton.addActionListener(actionListener);
     }
     
     void addUserInputListener(KeyListener keyListener) 

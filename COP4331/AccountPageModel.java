@@ -28,6 +28,17 @@ public class AccountPageModel extends Observable
         return user;
     }
     
+    public void setUser(User updatedUser)
+    {
+        System.out.println("Account Model receiving user data:");
+        System.out.println("Username: " + updatedUser.username);
+        System.out.println("Products: " + updatedUser.products.toString());
+        System.out.println("Email: " + updatedUser.email);
+        user = updatedUser;
+        
+        update();
+    }
+    
     public void setIsEditing(boolean enabled)
     {
         isEditing = enabled;

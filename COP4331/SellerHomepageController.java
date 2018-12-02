@@ -26,6 +26,8 @@ public class SellerHomepageController implements ActionListener, KeyListener
 
     public SellerHomepageController(SellerHomepageModel sellerHomepageModel, SellerHomepageView sellerHomepageView)
     {
+        System.out.println("Seller homepage controller constructor being called");
+        
         model = sellerHomepageModel;
         view = sellerHomepageView;
     }
@@ -86,6 +88,8 @@ public class SellerHomepageController implements ActionListener, KeyListener
         System.out.println("Products: " + updatedUser.products.toString());
         model.setUser(updatedUser);
         model.setProducts( getUserProducts());
+        //view.addRemoveListingListener(this);
+        displaySellerHomepage();
     }
     
     void addListeners()
