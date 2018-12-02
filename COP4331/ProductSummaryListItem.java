@@ -2,6 +2,7 @@ package COP4331;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionListener;
 import javafx.scene.Parent;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -30,6 +31,7 @@ public class ProductSummaryListItem extends javax.swing.JPanel
 
         titleLabel.setText(product.title);
         removeListing.setName(product.title);
+        updateListing.setName(product.title);
 
         priceLabel.setText("$" + String.valueOf(product.price / 100.00));
         summaryLabel.setText("<html>" + product.summary + "</html>");
@@ -40,6 +42,11 @@ public class ProductSummaryListItem extends javax.swing.JPanel
     public JButton getRemoveButton()
     {
         return removeListing;
+    }
+    
+    public JButton getUpdateButton()
+    {
+        return updateListing;
     }
 
     /**
@@ -57,6 +64,7 @@ public class ProductSummaryListItem extends javax.swing.JPanel
         summaryLabel = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         removeListing = new javax.swing.JButton();
+        updateListing = new javax.swing.JButton();
 
         imageLabel.setText("[imageLabel]");
 
@@ -71,6 +79,9 @@ public class ProductSummaryListItem extends javax.swing.JPanel
         removeListing.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         removeListing.setText("Remove Listing");
 
+        updateListing.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        updateListing.setText("Update Listing");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -80,13 +91,18 @@ public class ProductSummaryListItem extends javax.swing.JPanel
                 .addComponent(imageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(priceLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(summaryLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(summaryLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(103, 103, 103))
                     .addComponent(jSeparator1)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(titleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(removeListing)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(titleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 356, Short.MAX_VALUE)
+                            .addComponent(priceLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(updateListing, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(removeListing, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -98,7 +114,9 @@ public class ProductSummaryListItem extends javax.swing.JPanel
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(titleLabel)
                             .addComponent(removeListing))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(updateListing)
+                        .addGap(12, 12, 12)
                         .addComponent(priceLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -119,5 +137,6 @@ public class ProductSummaryListItem extends javax.swing.JPanel
     private javax.swing.JButton removeListing;
     private javax.swing.JLabel summaryLabel;
     private javax.swing.JLabel titleLabel;
+    private javax.swing.JButton updateListing;
     // End of variables declaration//GEN-END:variables
 }

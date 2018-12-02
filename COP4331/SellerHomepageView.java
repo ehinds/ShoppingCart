@@ -55,13 +55,13 @@ public class SellerHomepageView extends GenericView implements Observer
     
     void addLogoutButtonListener(ActionListener actionListener) 
     {
-        System.out.println("Login listener added\n");
+        System.out.println("Logout listener added\n");
         logoutButton.addActionListener(actionListener);
     }
     
     void addViewAccountButtonListener(ActionListener actionListener) 
     {
-        System.out.println("Login listener added\n");
+        System.out.println("View Account listener added\n");
         viewAccountButton.addActionListener(actionListener);
     }
     
@@ -84,6 +84,16 @@ public class SellerHomepageView extends GenericView implements Observer
         {
             System.out.println("addRemoveListingListener added for " + productSummaryListItems.get(i).getRemoveButton().getName());
             productSummaryListItems.get(i).getRemoveButton().addActionListener(actionListener);
+        }
+        
+    }
+    
+    void addUpdateListingListener(ActionListener actionListener) 
+    {
+        for (int j = 0; j < productSummaryListItems.size(); j++) 
+        {
+            System.out.println("addUpdateListingListener added for " + productSummaryListItems.get(j).getUpdateButton().getName());
+            productSummaryListItems.get(j).getUpdateButton().addActionListener(actionListener);
         }
         
     }
