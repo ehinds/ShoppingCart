@@ -423,6 +423,28 @@ public class Database implements java.io.Serializable
         }
     }
     
+          public void updatePassword(User user)
+    {
+        String sql = "UPDATE users SET password = ? WHERE username = ?";
+ 
+        try
+        (
+            Connection conn = this.connect();
+            PreparedStatement pstmt = conn.prepareStatement(sql)
+        )
+        {
+
+            pstmt.setString(1, user.password);
+             pstmt.setString(2, user.username);
+            pstmt.executeUpdate();
+            System.out.println("Updated database information for " + user.username);
+        } 
+        catch (SQLException e) 
+        {
+            System.out.println(e.getMessage());
+        }
+    }
+    
     public boolean isNullProduct(String item)
     {
         if(getProduct(item).title == null)
