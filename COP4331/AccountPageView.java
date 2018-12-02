@@ -38,6 +38,7 @@ public class AccountPageView extends GenericView implements Observer
     User getUserBillingInfo()
     {
         User user = model.getUser();
+        System.out.println("user.accountType: " + user.accountType);
         if(user.accountType)
         {
             user.bankAccount = billingText.getText();
@@ -46,6 +47,9 @@ public class AccountPageView extends GenericView implements Observer
         {
             user.creditCard = billingText.getText();
         }
+        
+        System.out.println("(getUserBillingInfo)Bank account: " + user.bankAccount);
+        System.out.println("(getUserBillingInfo)Creditcard: " + user.creditCard);
         
         return user;
     }
@@ -497,12 +501,22 @@ public class AccountPageView extends GenericView implements Observer
         if(model.getUser().accountType)
         {
             billingLabel.setText("Bank Account Number");
-            billingText.setText(model.getUser().bankAccount);
+            if(model.getUser().bankAccount != null)
+            {
+                billingText.setText(model.getUser().bankAccount);
+            }
+
+            System.out.println("Bank account: " + model.getUser().bankAccount);
         }
         else
         {
             billingLabel.setText("CreditCard Number");
-            billingText.setText(model.getUser().creditCard);
+            if(model.getUser().bankAccount != null)
+            {
+                billingText.setText(model.getUser().creditCard);
+            }
+            
+            System.out.println("Creditcard: " + model.getUser().creditCard);
         }
         
         emailText.setText(model.getUser().email);

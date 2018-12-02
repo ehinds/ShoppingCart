@@ -84,6 +84,8 @@ public class AccountPageController implements ActionListener, KeyListener
         database.updateUserBillingInformation(view.getUserBillingInfo());
 
         model.setUser(database.getUserData(model.getUser()));
+        System.out.println("(updateBillingInformation)Bank account: " + model.getUser().bankAccount);
+        System.out.println("(updateBillingInformation)Creditcard: " + model.getUser().creditCard);
         
         if(model.getUser().accountType)
         {
@@ -154,15 +156,18 @@ public class AccountPageController implements ActionListener, KeyListener
             
             if(model.getPersonalDataEnabled())
             {
+                System.out.println("getPersonalDataEnabled()");
                 updatePersonalInformation();
             }
             else if(model.getBillingInformationEnabled())
             {
-                
+                System.out.println("getBillingInformationEnabled()");
+                updateBillingInformation();
             }
             else if(model.getAccountInformationEnabled())
             {
-                
+                 System.out.println("getAccountInformationEnabled()");
+                 
             }
             
             //getUserBillingInfo()

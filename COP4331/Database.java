@@ -393,7 +393,7 @@ public class Database implements java.io.Serializable
     
     public void updateUserBillingInformation(User user)
     {
-        String sql = "UPDATE users SET email = ?, phone = ?, address = ?, DOB = ? WHERE username = ?";
+        String sql = "UPDATE users SET creditCard = ?, bankAccount = ? WHERE username = ?";
  
         try
         (
@@ -402,11 +402,18 @@ public class Database implements java.io.Serializable
         )
         {
 
-            pstmt.setString(1, user.email);
-            pstmt.setString(2, user.phone);
-            pstmt.setString(3, user.address);
-            pstmt.setString(4, user.DOB);
-            pstmt.setString(5, user.username);
+            if(user.accountType)
+            {
+                user.creditCard = "";
+            }
+            else
+            {
+                user.bankAccount = "";
+            }
+            
+            pstmt.setString(1, user.creditCard);
+            pstmt.setString(2, user.bankAccount);
+            pstmt.setString(3, user.username);
             pstmt.executeUpdate();
             System.out.println("Updated database information for " + user.username);
         } 
