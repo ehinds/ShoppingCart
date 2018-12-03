@@ -29,6 +29,7 @@ public class ProductSummaryListItem extends javax.swing.JPanel
         getUpdateButton().setVisible(false);
         getAddToCartButton().setVisible(false);
         getCountSpinner().setVisible(false);
+        getViewProductButton().setVisible(false);
         
         if(seller)
         {
@@ -39,6 +40,7 @@ public class ProductSummaryListItem extends javax.swing.JPanel
         {
             getAddToCartButton().setVisible(true);
             getCountSpinner().setVisible(true);
+            getViewProductButton().setVisible(true);
         }
 
         
@@ -51,6 +53,7 @@ public class ProductSummaryListItem extends javax.swing.JPanel
         removeListing.setName(product.title);
         updateListing.setName(product.title);
         addToCartButton.setName(product.title);
+        viewProductButton.setName(product.title);
         countSpinner.setName(product.title);
 
         priceLabel.setText("$" + String.valueOf(product.price / 100.00));
@@ -72,6 +75,11 @@ public class ProductSummaryListItem extends javax.swing.JPanel
     public JButton getAddToCartButton()
     {
         return addToCartButton;
+    }
+    
+    public JButton getViewProductButton()
+    {
+        return viewProductButton;
     }
     
     public JSpinner getCountSpinner()
@@ -97,6 +105,7 @@ public class ProductSummaryListItem extends javax.swing.JPanel
         countSpinner = new javax.swing.JSpinner();
         addToCartButton = new javax.swing.JButton();
         updateListing = new javax.swing.JButton();
+        viewProductButton = new javax.swing.JButton();
 
         imageLabel.setText("[imageLabel]");
 
@@ -118,6 +127,8 @@ public class ProductSummaryListItem extends javax.swing.JPanel
         updateListing.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         updateListing.setText("Update Listing");
 
+        viewProductButton.setText("View Product");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -127,8 +138,6 @@ public class ProductSummaryListItem extends javax.swing.JPanel
                 .addComponent(imageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(summaryLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jSeparator1)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -142,7 +151,13 @@ public class ProductSummaryListItem extends javax.swing.JPanel
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(removeListing, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(addToCartButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(addToCartButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(summaryLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jSeparator1))
+                        .addGap(18, 18, 18)
+                        .addComponent(viewProductButton, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -163,9 +178,14 @@ public class ProductSummaryListItem extends javax.swing.JPanel
                                 .addGap(1, 1, 1)
                                 .addComponent(countSpinner)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(summaryLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(summaryLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(viewProductButton))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(imageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -184,5 +204,6 @@ public class ProductSummaryListItem extends javax.swing.JPanel
     private javax.swing.JLabel summaryLabel;
     private javax.swing.JLabel titleLabel;
     private javax.swing.JButton updateListing;
+    private javax.swing.JButton viewProductButton;
     // End of variables declaration//GEN-END:variables
 }

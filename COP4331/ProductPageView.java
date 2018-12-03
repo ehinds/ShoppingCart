@@ -99,6 +99,15 @@ public class ProductPageView extends GenericView implements Observer
 
         }
     }
+    
+   void addViewProductListener(ActionListener actionListener) 
+    {
+        for (int j = 0; j < productSummaryListItems.size(); j++) 
+        {
+            System.out.println("addViewProductListener added for " + productSummaryListItems.get(j).getViewProductButton().getName());
+            productSummaryListItems.get(j).getViewProductButton().addActionListener(actionListener);
+        }
+    }
 
     void displayCurrentInventory(String sort)
     {

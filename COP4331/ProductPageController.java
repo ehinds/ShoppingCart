@@ -94,7 +94,7 @@ public class ProductPageController implements ActionListener, KeyListener, Mouse
         model.setUser(updatedUser);
         //model.setProducts( getUserProducts());
         //view.addRemoveListingListener(this);
-        //displayProductPage();
+        displayProductPage();
     }
     
     void addListeners()
@@ -107,6 +107,7 @@ public class ProductPageController implements ActionListener, KeyListener, Mouse
         view.addShoppingCartEventListener(this);
         view.addAddToCartListener(this);
         view.addSortEventListener(this);
+        view.addViewProductListener(this);
         view.addUserInputListener(this); 
     }
 
@@ -170,10 +171,15 @@ public class ProductPageController implements ActionListener, KeyListener, Mouse
                 
                 //int count = (int)(((JButton)source.getParent())).getCountSpinner().getValue();
                 model.getUser().addItemToCart(button.getName(), 1);
-                view.addAddToCartListener(this);
-
+                view.addAddToCartListener(this);           
                 
-                
+                break;
+            case "View Product":
+                JButton button1 = (JButton)source;
+                IndividualItemPopUpModel individualItemPopUpModel = new IndividualItemPopUpModel(model.getUser(), database.getProduct(button1.getName()));
+                IndividualItemPopUpView individualItemPopUpView = new IndividualItemPopUpView(individualItemPopUpModel);
+                IndividualItemPopUpController individualItemPopUpController = new IndividualItemPopUpController(this, individualItemPopUpModel, individualItemPopUpView);
+                individualItemPopUpController.displayIndividualItemPopUp();
                 break;
             case "Shopping Cart":
                 System.out.println("Shopping Cart");
