@@ -7,7 +7,7 @@ import java.awt.event.KeyListener;
 
 /**
  *
- * @author Brownie
+ * @author 
  */
 public class LoginPageController implements ActionListener, KeyListener 
 {

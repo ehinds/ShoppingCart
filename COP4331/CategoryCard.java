@@ -5,7 +5,7 @@ import javax.swing.JLabel;
 
 /**
  *
- * @author Brownie
+ * @author 
  */
 public class CategoryCard extends javax.swing.JPanel 
 {

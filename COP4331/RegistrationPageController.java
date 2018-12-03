@@ -13,7 +13,7 @@ import java.io.IOException;
 
 /**
  *
- * @author Brownie
+ * @author 
  */
 public class RegistrationPageController implements ActionListener, KeyListener 
 {

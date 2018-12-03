@@ -10,7 +10,7 @@ import javax.swing.JSpinner;
 
 /**
  *
- * @author Brownie
+ * @author 
  */
 public class ProductSummaryListItem extends javax.swing.JPanel 
 {

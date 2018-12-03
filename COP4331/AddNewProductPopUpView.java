@@ -11,7 +11,7 @@ import javax.swing.JLabel;
 
 /**
  *
- * @author Brownie
+ * @author 
  */
 public class AddNewProductPopUpView extends GenericView implements Observer
 {

@@ -23,7 +23,7 @@ import javax.swing.border.EmptyBorder;
 
 /**
  *
- * @author Brownie
+ * @author 
  */
 public class CustomerHomepageView extends GenericView implements Observer
 {

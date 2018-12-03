@@ -21,7 +21,7 @@ import javax.swing.border.EmptyBorder;
 
 /**
  *
- * @author Brownie
+ * @author 
  */
 public class SellerHomepageView extends GenericView implements Observer
 {

@@ -7,7 +7,7 @@ import javax.swing.ImageIcon;
 
 /**
  *
- * @author Brownie
+ * @author 
  */
 public class CustomerHomepageModel extends Observable
 {

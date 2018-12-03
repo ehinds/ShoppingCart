@@ -12,7 +12,7 @@ import javax.swing.JLabel;
 
 /**
  *
- * @author Brownie
+ * @author 
  */
 public class UpdateItemPopUpView extends GenericView implements Observer
 {

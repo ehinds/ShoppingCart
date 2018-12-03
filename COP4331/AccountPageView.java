@@ -8,7 +8,7 @@ import java.util.Observer;
 
 /**
  *
- * @author Brownie
+ * @author 
  */
 public class AccountPageView extends GenericView implements Observer
 {

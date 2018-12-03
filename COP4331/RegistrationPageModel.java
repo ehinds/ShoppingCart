@@ -4,7 +4,7 @@ import java.util.Observable;
 
 /**
  *
- * @author Brownie
+ * @author 
  */
 public class RegistrationPageModel extends Observable
 {

@@ -16,7 +16,7 @@ import javax.swing.JFileChooser;
 
 /**
  *
- * @author Brownie
+ * @author 
  */
 public class AddNewProductPopUpController implements ActionListener
 {

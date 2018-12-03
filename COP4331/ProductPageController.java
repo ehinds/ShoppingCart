@@ -20,7 +20,7 @@ import javax.swing.JComboBox;
 
 /**
  *
- * @author Brownie
+ * @author 
  */
 public class ProductPageController implements ActionListener, KeyListener, MouseListener
 {
@@ -101,9 +101,7 @@ public class ProductPageController implements ActionListener, KeyListener, Mouse
     {
         view.addLogoutButtonListener(this);
         view.addViewAccountButtonListener(this);
-        //view.addMerchantAnalyticsButtonListener(this);
-        //view.addAddNewProductButtonListener(this);
-        //view.addRemoveListingListener(this);
+        view.addViewCustomerHomepageButtonListener(this);
         view.addShoppingCartEventListener(this);
         view.addAddToCartListener(this);
         view.addSortEventListener(this);
@@ -121,16 +119,7 @@ public class ProductPageController implements ActionListener, KeyListener, Mouse
         LoginPageController loginPageController = new LoginPageController(loginPageModel, loginPageView);
         loginPageController.displayLoginPage();
     }
-
    
-    public void displayAddNewProductPopUp(User user)
-    {
-        AddNewProductPopUpModel addNewProductPopUpModel = new AddNewProductPopUpModel(user);
-        AddNewProductPopUpView addNewProductPopUpView = new AddNewProductPopUpView(addNewProductPopUpModel);
-        //AddNewProductPopUpController addNewProductPopUpController = new AddNewProductPopUpController(this, addNewProductPopUpModel, addNewProductPopUpView);
-        //addNewProductPopUpController.displayAddNewProductPopUp();
-    }
-    
     public void displayAccountPage()
     {
         view.removeAll();
@@ -140,6 +129,17 @@ public class ProductPageController implements ActionListener, KeyListener, Mouse
         AccountPageView accountPageView = new AccountPageView(accountPageModel);
         AccountPageController accountPageController = new AccountPageController(accountPageModel, accountPageView);
         accountPageController.displayAccountPage();
+    }
+    
+        public void displayCustomerHomepage()
+    {
+        view.removeAll();
+        view.dispose();
+        
+        CustomerHomepageModel customerHomepageModel = new CustomerHomepageModel(model.getUser());
+        CustomerHomepageView customerHomepageView = new CustomerHomepageView(customerHomepageModel);
+       CustomerHomepageController customerHomepageController = new CustomerHomepageController(customerHomepageModel, customerHomepageView);
+        customerHomepageController.displayCustomerHomepage();
     }
     
     @Override
@@ -162,6 +162,9 @@ public class ProductPageController implements ActionListener, KeyListener, Mouse
                 break;
             case "View Account":
                 displayAccountPage();
+                break;
+            case "View Homepage":
+                displayCustomerHomepage();
                 break;
             case "Add to Cart":
                 System.out.println("Add to cart");

@@ -7,7 +7,7 @@ import javax.swing.JLabel;
 
 /**
  *
- * @author Brownie
+ * @author 
  */
 public class AddNewProductPopUpModel extends Observable
 {

@@ -107,6 +107,8 @@
                               <Component id="logoutButton" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
+                              <Component id="viewCustomerHomepageButton" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="shoppingCartButton" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="viewAccountButton" min="-2" max="-2" attributes="0"/>
@@ -132,6 +134,7 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="viewAccountButton" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="shoppingCartButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="viewCustomerHomepageButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
@@ -166,6 +169,11 @@
             <Component class="javax.swing.JButton" name="shoppingCartButton">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Shopping Cart"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="viewCustomerHomepageButton">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="View Homepage"/>
               </Properties>
             </Component>
           </SubComponents>

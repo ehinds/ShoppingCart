@@ -4,7 +4,7 @@ import java.util.Comparator;
 
 /**
  *
- * @author Brownie
+ * @author 
  */
 public class SortProducts
 {

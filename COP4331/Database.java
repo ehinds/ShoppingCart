@@ -25,7 +25,7 @@ import javax.swing.ImageIcon;
 
 /**
  *
- * @author Brownie
+ * @author 
  */
 public class Database implements java.io.Serializable 
 {

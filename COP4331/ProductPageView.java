@@ -27,7 +27,7 @@ import javax.swing.border.EmptyBorder;
 
 /**
  *
- * @author Brownie
+ * @author 
  */
 public class ProductPageView extends GenericView implements Observer
 {
@@ -78,6 +78,12 @@ public class ProductPageView extends GenericView implements Observer
         viewAccountButton.addActionListener(actionListener);
     }
     
+     void addViewCustomerHomepageButtonListener(ActionListener actionListener) 
+    {
+        System.out.println("Login listener added\n");
+        viewCustomerHomepageButton.addActionListener(actionListener);
+    }
+    
     void addSortEventListener(ActionListener actionListener) 
     {
         System.out.println("Sort listener added\n");
@@ -102,7 +108,7 @@ public class ProductPageView extends GenericView implements Observer
     
    void addViewProductListener(ActionListener actionListener) 
     {
-        for (int j = 0; j < productSummaryListItems.size(); j++) 
+        for (int j = 0; j < productSummaryListItems.size(); j++)
         {
             System.out.println("addViewProductListener added for " + productSummaryListItems.get(j).getViewProductButton().getName());
             productSummaryListItems.get(j).getViewProductButton().addActionListener(actionListener);
@@ -187,6 +193,7 @@ public class ProductPageView extends GenericView implements Observer
         viewAccountButton = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         shoppingCartButton = new javax.swing.JButton();
+        viewCustomerHomepageButton = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         errorLabel = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
@@ -211,6 +218,8 @@ public class ProductPageView extends GenericView implements Observer
 
         shoppingCartButton.setText("Shopping Cart");
 
+        viewCustomerHomepageButton.setText("View Homepage");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -223,6 +232,8 @@ public class ProductPageView extends GenericView implements Observer
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(logoutButton))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addComponent(viewCustomerHomepageButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(shoppingCartButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(viewAccountButton)
@@ -242,7 +253,8 @@ public class ProductPageView extends GenericView implements Observer
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(viewAccountButton)
-                    .addComponent(shoppingCartButton))
+                    .addComponent(shoppingCartButton)
+                    .addComponent(viewCustomerHomepageButton))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -384,6 +396,7 @@ public class ProductPageView extends GenericView implements Observer
     private javax.swing.JButton shoppingCartButton;
     private javax.swing.JComboBox<String> sortBox;
     private javax.swing.JButton viewAccountButton;
+    private javax.swing.JButton viewCustomerHomepageButton;
     private javax.swing.JLabel welcomeUserLabel;
     // End of variables declaration//GEN-END:variables
 

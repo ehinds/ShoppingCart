@@ -6,7 +6,7 @@ import javax.swing.JFrame;
 
 /**
  *
- * @author Brownie
+ * @author 
  */
 public abstract class GenericView extends javax.swing.JFrame
 {

@@ -20,7 +20,7 @@ import javax.swing.JFileChooser;
 
 /**
  *
- * @author ASUS
+ * @author 
  */
 public class UpdateItemPopUpController implements ActionListener{
       private final Database database = new Database();

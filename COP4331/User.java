@@ -6,7 +6,7 @@ import java.util.LinkedList;
 
 /**
  *
- * @author Brownie
+ * @author 
  */
 public class User 
 {

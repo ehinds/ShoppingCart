@@ -8,7 +8,7 @@ import java.io.IOException;
 
 /**
  *
- * @author Brownie
+ * @author 
  */
 public class AccountPageController implements ActionListener, KeyListener 
 {

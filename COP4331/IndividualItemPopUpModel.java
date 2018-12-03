@@ -10,7 +10,7 @@ import javax.swing.ImageIcon;
 
 /**
  *
- * @author ASUS
+ * @author 
  */
 public class IndividualItemPopUpModel extends Observable{
      private User user = new User();

@@ -18,7 +18,7 @@ import javax.swing.JButton;
 
 /**
  *
- * @author Brownie
+ * @author 
  */
 public class CustomerHomepageController implements ActionListener, KeyListener, MouseListener
 {
